@@ -15,12 +15,7 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('test');
-});
-Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index']);
-
-
+Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
 
 
 // Авторизация Laravel JetStream
