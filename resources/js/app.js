@@ -4,7 +4,8 @@ import '../css/app.css';
 import {createApp, h} from 'vue';
 import {createInertiaApp} from '@inertiajs/vue3';
 import {resolvePageComponent} from 'laravel-vite-plugin/inertia-helpers';
-import {ZiggyVue} from '../../vendor/tightenco/ziggy';
+import {ZiggyVue} from 'ziggy-js';
+import i18n from './i18n';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -15,7 +16,8 @@ createInertiaApp({
         const app = createApp({render: () => h(App, props)});
         app.config.globalProperties.$user = props.initialPage.props.auth.user;
         app.use(plugin)
-            .use(ZiggyVue);
+            .use(ZiggyVue)
+            .use(i18n);
         app.mount(el);
         return app;
     },

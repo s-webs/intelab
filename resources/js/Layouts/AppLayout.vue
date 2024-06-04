@@ -1,34 +1,55 @@
 <script setup>
-import {computed, getCurrentInstance, ref} from 'vue';
+import {ref, computed} from 'vue';
 import {Head, Link, router, usePage} from '@inertiajs/vue3';
 import Loading from "@/Components/Loading.vue";
+import {useI18n} from 'vue-i18n';
 
-const user = computed(() => {
-    return getCurrentInstance().appContext.config.globalProperties.$user;
-});
+const {props} = usePage();
+const user = computed(() => props.auth.user);
+const {t, locale} = useI18n();
 
-const isAuthenticated = ref(user !== null);
 const loading = ref(false);
-
+const isDropdownOpen = ref(false);
 const menuOpen = ref(false);
+
+const toggleDropdown = () => {
+    isDropdownOpen.value = !isDropdownOpen.value;
+};
 
 const toggleMenu = () => {
     menuOpen.value = !menuOpen.value;
 };
 
-
 const logout = () => {
-    loading.value = true
+    loading.value = true;
     router.post(route('logout'), {}, {
-        onSuccess: progress => {
-            router.visit(window.location.href)
-            loading.value = false
+        onFinish: () => {
+            router.visit(window.location.href);
+            loading.value = false;
         },
-    })
-}
-
+    });
+};
 
 const showSidebar = ref(false);
+
+// Добавлен объект с языками и текущим языком
+const languages = {
+    ru: 'Русский',
+    en: 'English',
+    kz: 'Қазақша'
+};
+const currentLanguage = computed(() => locale.value);
+
+// Функция для смены языка
+const changeLanguage = (lang) => {
+    locale.value = lang;
+    localStorage.setItem('language', lang);
+    isDropdownOpen.value = false;
+};
+
+if (localStorage.getItem('language')) {
+    locale.value = localStorage.getItem('language');
+}
 </script>
 
 <template>
@@ -41,30 +62,40 @@ const showSidebar = ref(false);
                     <button @click="showSidebar = !showSidebar"><i class="fa fa-bars"></i></button>
                 </div>
                 <Link href="/" class="block">
-                    <img class="w-32" src="/images/default/logo.svg" alt="logo">
+                    <img class="w-32" src="/images/default/logo.svg" alt="logo"/>
                 </Link>
                 <div class="flex items-center flex-1 justify-end">
-                    <div class="border text-white px-2">
-                        <span class="mr-2">Русский</span>
-                        <i class="fa fa-caret-down"></i>
+                    <div class="relative">
+                        <div class="border text-white px-2 cursor-pointer" @click="toggleDropdown">
+                            <span class="mr-2">{{ $t('languages.' + currentLanguage) }}</span>
+                            <i class="fa fa-caret-down"></i>
+                        </div>
+                        <div v-if="isDropdownOpen"
+                             class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
+                            <div v-for="(lang, key) in languages" :key="key" @click="changeLanguage(key)"
+                                 class="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                {{ lang }}
+                            </div>
+                        </div>
                     </div>
                     <div class="ml-3">
                         <div v-if="user" class="ml-3">
                             <button @click="toggleMenu" class="block">
-                                <img class="w-12 h-12 rounded-full border" :src="user.profile_photo_path"
-                                     alt="avatar">
+                                <img class="w-12 h-12 rounded-full border" :src="user.profile_photo_path" alt="avatar"/>
                             </button>
                             <div v-if="menuOpen"
                                  class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
                                 <a href="#" @click.prevent="logout"
                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                    Выйти
+                                    {{ t('auth.logout') }}
                                 </a>
                             </div>
                         </div>
                         <div v-else>
-                            <Link :href="route('login')" class="border mr-2 text-white py-1 px-2">Войти</Link>
-                            <Link :href="route('register')" class="border text-white py-1 px-2">Зарегистрироваться
+                            <Link :href="route('login')" class="border mr-2 text-white py-1 px-2">
+                                {{ t('auth.login') }}
+                            </Link>
+                            <Link :href="route('register')" class="border text-white py-1 px-2">{{ t('auth.register') }}
                             </Link>
                         </div>
                     </div>
@@ -89,46 +120,41 @@ const showSidebar = ref(false);
                 <ul class="font-medium">
                     <!-- Основыные -->
                     <li class="text-sm text-gray-400 border-b border-gray-400">
-                        <span>Основные</span>
+                        <span>{{ t('menu.main') }}</span>
                     </li>
                     <li>
                         <Link href="/"
                               class="flex border border-white hover:bg-main-blue hover:text-white items-center bg-white py-1 px-2 text-sm text-main-blue rounded-lg hover:bg-gray-100 mt-4">
                             <i class="fa fa-home mr-2"></i>
-                            <span class="pt-0.5">Главная</span>
+                            <span class="pt-0.5">{{ t('menu.main') }}</span>
                         </Link>
                         <a href="#"
                            class="flex border border-white hover:bg-main-blue hover:text-white items-center bg-white py-1 px-2 text-sm text-main-blue rounded-lg hover:bg-gray-100 mt-4">
                             <i class="fa fa-magnifying-glass mr-2"></i>
-                            <span class="pt-0.5">Поиск</span>
+                            <span class="pt-0.5">{{ t('menu.search') }}</span>
                         </a>
                     </li>
                     <!-- Преподавание -->
                     <li class="text-sm text-gray-400 border-b border-gray-400 mt-5">
-                        <span>Преподавание</span>
+                        <span>{{ t('menu.teaching') }}</span>
                     </li>
                     <li>
                         <Link href="/"
                               class="flex border border-white hover:bg-main-blue hover:text-white items-center bg-white py-1 px-2 text-sm text-main-blue rounded-lg hover:bg-gray-100 mt-4">
                             <i class="fa-solid fa-lines-leaning mr-2"></i>
-                            <span class="pt-0.5">Мои курсы</span>
+                            <span class="pt-0.5">{{ t('menu.myCourses') }}</span>
                         </Link>
                     </li>
                     <!-- Обучение -->
                     <li class="text-sm text-gray-400 border-b border-gray-400 mt-5">
-                        <span>Обучение</span>
+                        <span>{{ t('menu.training') }}</span>
                     </li>
                     <li>
                         <Link href="/"
                               class="flex border border-white hover:bg-main-blue hover:text-white items-center bg-white py-1 px-2 text-sm text-main-blue rounded-lg hover:bg-gray-100 mt-4">
                             <i class="fa-solid fa-graduation-cap mr-2"></i>
-                            <span class="pt-0.5">Мои курсы</span>
+                            <span class="pt-0.5">{{ t('menu.myCourses') }}</span>
                         </Link>
-                        <!--                        <Link :href="route('userCourses')"-->
-                        <!--                              class="flex border border-white hover:bg-main-blue hover:text-white items-center bg-white py-1 px-2 text-sm text-main-blue rounded-lg hover:bg-gray-100 mt-4">-->
-                        <!--                            <i class="fa fa-heart mr-2"></i>-->
-                        <!--                            <span class="pt-0.5">Избранное</span>-->
-                        <!--                        </Link>-->
                     </li>
                 </ul>
             </div>
@@ -137,7 +163,6 @@ const showSidebar = ref(false);
         <main class="min-h-screen">
             <slot/>
         </main>
-
 
         <footer class="bg-main-blue mt-8">
             <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
@@ -148,22 +173,22 @@ const showSidebar = ref(false);
                     </Link>
                     <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-white sm:mb-0">
                         <li>
-                            <a href="#" class="hover:underline me-4 md:me-6">О нас</a>
+                            <a href="#" class="hover:underline me-4 md:me-6">{{ t('menu.about') }}</a>
                         </li>
                         <li>
-                            <a href="#" class="hover:underline me-4 md:me-6">Политика конфиденциальности</a>
+                            <a href="#" class="hover:underline me-4 md:me-6">{{ t('menu.privacyPolicy') }}</a>
                         </li>
                         <li>
-                            <a href="#" class="hover:underline me-4 md:me-6">Лицензия</a>
+                            <a href="#" class="hover:underline me-4 md:me-6">{{ t('menu.license') }}</a>
                         </li>
                         <li>
-                            <a href="#" class="hover:underline">Контакты</a>
+                            <a href="#" class="hover:underline">{{ t('menu.contacts') }}</a>
                         </li>
                     </ul>
                 </div>
                 <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8"/>
                 <span class="block text-sm text-gray-500 sm:text-center text-white">© 2024
-                    <Link href="/" class="hover:underline">Intelab</Link>. Все права защищены.</span>
+                    <Link href="/" class="hover:underline">Intelab</Link>. {{ t('menu.allRR') }}.</span>
             </div>
         </footer>
     </div>
