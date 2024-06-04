@@ -6,6 +6,7 @@ namespace App\Providers;
 
 use App\MoonShine\Resources\CategoryResource;
 use App\MoonShine\Resources\StockResource;
+use MoonShine\Menu\MenuDivider;
 use MoonShine\Providers\MoonShineApplicationServiceProvider;
 use MoonShine\MoonShine;
 use MoonShine\Menu\MenuGroup;
@@ -41,6 +42,8 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
     protected function menu(): array
     {
         return [
+            MenuItem::make('Вернуться на сайт', '/', '', true),
+            MenuDivider::make(),
             MenuGroup::make(static fn() => __('moonshine::ui.resource.system'), [
                 MenuItem::make(
                     static fn() => __('moonshine::ui.resource.admins_title'),
