@@ -14,6 +14,7 @@
         "axios": "^1.6.4",
         "laravel-vite-plugin": "^1.0.0",
         "postcss": "^8.4.14",
+        "sass": "^1.77.4",
         "tailwindcss": "^3.4.3",
         "vite": "^5.0.0",
         "vue": "^3.2.31"
@@ -21,6 +22,7 @@
     "dependencies": {
         "@inertiajs/vue3": "^1.1.0",
         "@vitejs/plugin-vue": "^5.0.5",
+        "swiper": "^11.1.4",
         "vue": "^3.4.27",
         "vue-i18n": "^10.0.0-beta.1",
         "ziggy-js": "^2.2.1"

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\MoonShine\Resources\CategoryResource;
+use App\MoonShine\Resources\StockResource;
 use MoonShine\Providers\MoonShineApplicationServiceProvider;
 use MoonShine\MoonShine;
 use MoonShine\Menu\MenuGroup;
@@ -51,7 +52,8 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
                 ),
             ]),
 
-            MenuItem::make('Категории курсов', new CategoryResource())
+            MenuItem::make('Категории курсов', new CategoryResource()),
+            MenuItem::make('Акции и события', new StockResource()),
         ];
     }
 

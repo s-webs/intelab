@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -11,8 +12,13 @@ class HomeController extends Controller
     public function index()
     {
         $categories = Category::all();
+        $stock = Stock::query()
+            ->where('is_active', '=', true)
+            ->latest('created_at')
+            ->first();
         return Inertia::render('Home/Home', [
-            'categories' => $categories
+            'categories' => $categories,
+            'stock' => $stock
         ]);
     }
 }
