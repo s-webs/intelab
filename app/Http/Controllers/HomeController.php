@@ -11,7 +11,13 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::all()->map(function ($category) {
+            $category->loadCount(['courses' => function ($query) {
+                $query->where('status', true)->where('hidden', false);
+            }]);
+            return $category;
+        });
+
         $stock = Stock::query()
             ->where('is_active', '=', true)
             ->latest('created_at')

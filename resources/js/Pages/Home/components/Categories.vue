@@ -12,7 +12,9 @@ const props = defineProps({
 const currentLanguage = ref(localStorage.getItem('language') || 'en');
 
 const filteredCategories = computed(() => {
-    return props.categories.filter(category => category.parent_id !== null);
+    return props.categories
+        .filter(category => category.parent_id !== null)
+        .sort((a, b) => b.courses_count - a.courses_count);
 });
 </script>
 
@@ -53,7 +55,9 @@ const filteredCategories = computed(() => {
                         <span v-else-if="currentLanguage === 'en'">{{ slide.name_en }}</span>
                         <span v-else>{{ slide.name }}</span>
                     </div>
-                    <div class="mb-2" :style="{ color: slide.text_color}">-</div>
+                    <div class="mb-2" :style="{ color: slide.text_color}">
+                        Количество курсов: <span>{{ slide.courses_count }}</span>
+                    </div>
                 </a>
             </swiper-slide>
         </swiper>
