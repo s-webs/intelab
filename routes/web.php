@@ -24,5 +24,16 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+    Route::prefix('teacher')->group(function () {
+        Route::resource('course', \App\Http\Controllers\Teacher\CourseController::class)->names('teacherCourse');
+    });
+});
 
+// Ckeditor
+Route::group(['middleware' => [\App\Http\Middleware\CKFinderSetup::class]], function () {
+    Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')
+        ->name('ckfinder_connector');
+
+    Route::any('/ckfinder/browser', '\CKSource\CKFinderBridge\Controller\CKFinderController@browserAction')
+        ->name('ckfinder_browser');
 });
