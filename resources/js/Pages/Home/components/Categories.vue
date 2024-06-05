@@ -3,11 +3,13 @@ import {Swiper, SwiperSlide} from "swiper/vue";
 import "swiper/css";
 import 'swiper/css/navigation';
 import {Navigation} from 'swiper/modules';
-import {computed, defineProps} from 'vue';
+import {computed, defineProps, ref} from 'vue';
 
 const props = defineProps({
     categories: Array
 })
+
+const currentLanguage = ref(localStorage.getItem('language') || 'en');
 
 const filteredCategories = computed(() => {
     return props.categories.filter(category => category.parent_id !== null);
@@ -17,16 +19,39 @@ const filteredCategories = computed(() => {
 <template>
     <div class="flex gap-2 overflow-hidden">
         <swiper class="mt-4"
-                :slides-per-view="3.5"
                 :space-between="20"
                 :loop="true"
                 :navigation="true"
                 :modules="[Navigation]"
+                :breakpoints="{
+                    320: {
+                        slidesPerView: 1,
+                        spaceBetween: 10
+                    },
+                    480: {
+                        slidesPerView: 1,
+                        spaceBetween: 10
+                    },
+                    640: {
+                        slidesPerView: 2,
+                        spaceBetween: 10
+                    },
+                    768: {
+                        slidesPerView: 2.5,
+                        spaceBetween: 20
+                    },
+                    1024: {
+                        slidesPerView: 4.5,
+                        spaceBetween: 20
+                    }
+                }"
         >
             <swiper-slide v-for="slide in filteredCategories" :key="slide.id">
                 <a href="#" class="block border p-6 rounded-lg" :style="{ backgroundColor: slide.background_color}">
                     <div class="mb-2 font-medium text-lg h-16" :style="{ color: slide.text_color}">
-                        {{ slide.name }}
+                        <span v-if="currentLanguage === 'kz'">{{ slide.name_kz }}</span>
+                        <span v-else-if="currentLanguage === 'en'">{{ slide.name_en }}</span>
+                        <span v-else>{{ slide.name }}</span>
                     </div>
                     <div class="mb-2" :style="{ color: slide.text_color}">-</div>
                 </a>

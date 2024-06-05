@@ -12,6 +12,9 @@ import kzMenu from './locales/kz/menu.js'
 import enSearch from './locales/en/search.js'
 import ruSearch from './locales/ru/search.js'
 import kzSearch from './locales/kz/search.js'
+import enPages from './locales/en/pages.js'
+import ruPages from './locales/ru/pages.js'
+import kzPages from './locales/kz/pages.js'
 
 const messages = {
     en: {
@@ -19,18 +22,21 @@ const messages = {
         languages: enLanguages,
         menu: enMenu,
         search: enSearch,
+        pages: enPages,
     },
     ru: {
         auth: ruAuth,
         languages: ruLanguages,
         menu: ruMenu,
         search: ruSearch,
+        pages: ruPages,
     },
     kz: {
         auth: kzAuth,
         languages: kzLanguages,
         menu: kzMenu,
         search: kzSearch,
+        pages: kzPages,
     }
 };
 

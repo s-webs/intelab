@@ -33,7 +33,7 @@ class CategoryResource extends ModelResource
 
     public function redirectAfterSave(): string
     {
-        return '/cabinet/resource/category-resource/index-page';
+        return '/crm/resource/category-resource/index-page';
     }
 
     /**
@@ -47,6 +47,8 @@ class CategoryResource extends ModelResource
                 BelongsTo::make('Родительская категория (если есть)', 'parent', 'name', resource: new CategoryResource())
                     ->nullable(),
                 Text::make('Название', 'name')->required(),
+                Text::make('Название на казахском', 'name_kz')->required(),
+                Text::make('Название на английском', 'name_en')->required(),
                 Color::make('Цвет фона', 'background_color')
                     ->default('#BEF7FF'),
                 Color::make('Цвет текста', 'text_color')

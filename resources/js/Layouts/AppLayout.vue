@@ -56,7 +56,7 @@ if (localStorage.getItem('language')) {
     <div>
         <Head/>
         <Loading v-if="loading"/>
-        <header class="py-3 bg-main-blue">
+        <header class="py-3 bg-main-blue px-2.5">
             <div class="container mx-auto header__wrapper flex justify-between items-center">
                 <div class="header__btn-menu text-xl flex-1 text-white">
                     <button @click="showSidebar = !showSidebar"><i class="fa fa-bars"></i></button>
@@ -78,7 +78,7 @@ if (localStorage.getItem('language')) {
                             </div>
                         </div>
                     </div>
-                    <div class="ml-3">
+                    <div class="ml-3 hidden lg:block">
                         <div v-if="user" class="ml-3">
                             <button @click="toggleMenu" class="block">
                                 <img class="w-12 h-12 rounded-full border" :src="user.profile_photo_path" alt="avatar"/>
@@ -118,8 +118,30 @@ if (localStorage.getItem('language')) {
 
             <div class="py-4 overflow-y-auto mt-4 border-t border-gray-600">
                 <ul class="font-medium">
+                    <li class="lg:hidden">
+                        <div v-if="user" class="flex justify-between items-center">
+                            <button @click="toggleMenu" class="flex items-center">
+                                <img class="w-8 h-8 rounded-full border" :src="user.profile_photo_path" alt="avatar"/>
+                                <span class="ml-2 text-white">{{ user.name }}</span>
+                            </button>
+                            <div>
+                                <a href="#" @click.prevent="logout"
+                                   class="block px-4 py-2 text-sm text-red-600">
+                                    <i class="fa fa-right-from-bracket text-md"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <Link :href="route('login')" class="block border text-white py-1 px-2">
+                                {{ t('auth.login') }}
+                            </Link>
+                            <Link :href="route('register')" class="block border text-white mt-3 py-1 px-2">
+                                {{ t('auth.register') }}
+                            </Link>
+                        </div>
+                    </li>
                     <!-- Основыные -->
-                    <li class="text-sm text-gray-400 border-b border-gray-400">
+                    <li class="text-sm text-gray-400 border-b border-gray-400 mt-4">
                         <span>{{ t('menu.main') }}</span>
                     </li>
                     <li>
