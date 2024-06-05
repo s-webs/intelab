@@ -37,4 +37,10 @@ export default {
     save: 'Save',
     enterCourseDuration: 'Enter the duration of the course in hours',
     sureDeleteCourse: 'Are you sure you want to delete the course?',
+    warnChooseImage: 'Choose an image!',
+    editCourse: 'Edit course',
+    startCourse: 'Start the course',
+
+    createCourseManual: 'Instructions for creating a course',
+    createCourseConditions: 'Conditions for creating a course',
 }

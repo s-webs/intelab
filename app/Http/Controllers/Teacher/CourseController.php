@@ -46,6 +46,8 @@ class CourseController extends Controller
         $course->duration = $request->duration;
         $course->type = $request->type;
         $course->hidden = $request->hidden;
+        $course->price = $request->price;
+        $course->old_price = $request->old_price;
         $course->user_id = auth()->user()->id;
         $course->save();
 
@@ -65,7 +67,12 @@ class CourseController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $categories = Category::all();
+        $course = Course::with('category')->findOrFail($id);
+        return Inertia::render('TeacherCourse/Edit', [
+            'course' => $course,
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -73,7 +80,20 @@ class CourseController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $course = Course::findOrFail($id);
+        $course->category_id = $request->category;
+        $course->image = $request->image;
+        $course->language = $request->language;
+        $course->name = $request->name;
+        $course->price = $request->price;
+        $course->old_price = $request->old_price;
+        $course->description = $request->description;
+        $course->content = $request->html;
+        $course->duration = $request->duration;
+        $course->hidden = $request->hidden;
+        $course->type = $request->type;
+        $course->status = $request->status;
+        $course->save();
     }
 
     /**

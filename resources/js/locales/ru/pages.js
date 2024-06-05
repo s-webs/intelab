@@ -37,5 +37,11 @@ export default {
     save: 'Сохранить',
     enterCourseDuration: 'Введите продолжительность курса в часах',
     sureDeleteCourse: 'Вы уверены, что хотите удалить курс?',
+    warnChooseImage: 'Выберите изображение!',
+    editCourse: 'Редактировать курс',
+    startCourse: 'Запустить курс',
+
+    createCourseManual: 'Инструкция по созданию курса',
+    createCourseConditions: 'Условия по созданию курса',
 
 }

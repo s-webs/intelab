@@ -72,7 +72,8 @@ const courses = props.courses
                                 <span>{{ course.name }}</span>
                             </td>
                             <td class="px-6 py-4 text-center border-r">
-                                <span v-if="course.type === 'premium'">{{ course.price }} ₸</span>
+                                <span v-if="course.old_price > 0 && course.price > 0">{{ course.price }} ₸ <small class="line-through">{{ course.old_price }} ₸</small></span>
+                                <span v-else-if="course.price > 0">{{ course.price }} ₸</span>
                                 <span v-else
                                       class="bg-green-100 text-green-800 font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{
                                         t('pages.free')
@@ -99,7 +100,7 @@ const courses = props.courses
                                     <span class="hidden xl:inline xl:mr-2">{{ t('pages.courseProgram') }}</span>
                                     <i class="fa fa-layer-group"></i>
                                 </Link>
-                                <Link href="/"
+                                <Link :href="route('teacherCourse.edit', course.id)"
                                       class="font-medium text-main-blue text-sm p-1 rounded-md border border-main-blue mr-2">
                                     <span class="hidden 2xl:inline 2xl:mr-2">{{ t('pages.edit') }}</span>
                                     <i class="fa fa-pen"></i>
@@ -113,7 +114,6 @@ const courses = props.courses
                         </tr>
                         </tbody>
                     </table>
-                    <!--                    <PaginationTable :links="courses.links"/>-->
                 </div>
                 <div v-else class="text-center text-2xl py-10">
                     <div>
@@ -127,8 +127,6 @@ const courses = props.courses
                     </div>
                 </div>
             </div>
-
-
         </div>
     </AppLayout>
 </template>

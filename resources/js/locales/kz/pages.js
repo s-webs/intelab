@@ -37,5 +37,11 @@ export default {
     save: 'Сақтау',
     enterCourseDuration: 'Курстың ұзақтығын сағатпен енгізіңіз',
     sureDeleteCourse: 'Сіз курсты жойғыңыз келетініне сенімдісіз бе?',
+    warnChooseImage: 'Суретті таңдаңыз!',
+    editCourse: 'Курсты өңдеу',
+    startCourse: 'Курсты бастау',
+
+    createCourseManual: 'Курсты құру бойынша нұсқаулық',
+    createCourseConditions: 'Курсты құру шарттары',
 
 }
