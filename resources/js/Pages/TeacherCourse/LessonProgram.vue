@@ -1,5 +1,6 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
+import Breadcrumbs from "@/Components/Breadcrumbs.vue";
 import {router} from "@inertiajs/vue3";
 import {ref} from "vue";
 import AddStepContent from "@/Pages/TeacherCourse/components/addStepContent.vue";
@@ -31,6 +32,21 @@ const currentWritten = ref(null)
 const props = defineProps({
     lesson: Object
 })
+
+const breadcrumbs = [
+    {label: 'menu.home', url: route('home'), icon: 'fa fa-home'},
+    {label: 'pages.myCourses', url: route('teacherCourse.index'), icon: 'fa-solid fa-graduation-cap'},
+    {
+        label: 'pages.courseProgram',
+        url: route('teacherCourse.program', props.lesson.module.course.id),
+        icon: 'fa-solid fa-lines-leaning'
+    },
+    {
+        label: 'pages.lessonProgram',
+        url: route('teacherCourse.lesson.program', props.lesson.id),
+        icon: 'fa-solid fa-lines-leaning'
+    },
+]
 
 const openStepMenu = () => {
     isOpenStepMenu.value = true;
@@ -148,7 +164,8 @@ const deleteWritten = (step) => {
 <template>
     <AppLayout>
         <div class="container mx-auto my-8">
-            <div class="flex justify-between items-center border-b-2 border-main-blue pb-2">
+            <Breadcrumbs :breadcrumbs="breadcrumbs"/>
+            <div class="flex justify-between items-center border-b-2 border-main-blue pb-2 mt-8">
                 <h1 class="text-2xl font-medium text-main-blue">
                     {{ t('pages.lessonProgram') }} - <span class="text-blue-500">{{ lesson.name }}</span>
                 </h1>
@@ -191,19 +208,21 @@ const deleteWritten = (step) => {
                     <div v-if="isOpenStepMenu"
                          class="flex flex-col absolute border bg-blue-100 w-48 top-10 -right-52 rounded-lg overflow-hidden p-2">
                         <button @click="openAddStepContent" class="bg-green-400 hover:bg-green-600 py-1 rounded-sm">
-                            Добавить контент
+                            {{ t('pages.addContent') }}
                         </button>
-                        <span class="my-2 border-b-2 border-blue-400 font-medium rounded-sm">Тесты</span>
+                        <span class="my-2 border-b-2 border-blue-400 font-medium rounded-sm">{{
+                                t('pages.tests')
+                            }}</span>
                         <button @click="openQuiz"
-                                class="bg-blue-300 hover:bg-blue-500 mb-1 py-1 rounded-sm">Тест (Quiz)
+                                class="bg-blue-300 hover:bg-blue-500 mb-1 py-1 rounded-sm">{{ t('pages.testQuiz') }}
                         </button>
                         <button
                             @click="openAddMatching"
-                            class="bg-blue-300 hover:bg-blue-500 mb-1 py-1 rounded-sm">Сопоставление
+                            class="bg-blue-300 hover:bg-blue-500 mb-1 py-1 rounded-sm">{{ t('pages.testMatching') }}
                         </button>
                         <button
                             @click="openAddWritten"
-                            class="bg-blue-300 hover:bg-blue-500 py-1 rounded-sm">Письменный
+                            class="bg-blue-300 hover:bg-blue-500 py-1 rounded-sm">{{ t('pages.testWritten') }}
                         </button>
                         <button @click="closeStepMenu"
                                 class="bg-red-500 py-1 mt-4 text-white hover:bg-red-700 rounded-sm"><i

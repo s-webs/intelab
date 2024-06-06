@@ -68,4 +68,29 @@ export default {
     confirmDeleteLesson: 'Сіз сабақты жойғыңыз келетініне сенімдісіз бе?',
     lessonSteps: 'Сабақ қадамдары',
 
+    tests: 'Тесттер',
+    testQuiz: 'Тест (Quiz)',
+    testMatching: 'Салыстыру',
+    testWritten: 'Жазбаша',
+    addContent: 'Мазмұн қосу',
+    addQuiz: 'Тест қосу',
+    addMatching: 'Картаны қосу',
+    addWritten: 'Жазбаша емтихан қосыңыз',
+    quest: 'Сұрақ',
+    answer: 'Жауап',
+    answers: 'Жауаптар',
+    questPoints: 'Сұрақ үшін ұпайлар',
+    addAnswer: 'Жауап қосу',
+
+    enterQuest: 'Сұрақты енгізіңіз',
+    enterAnswer: 'Жауапты енгізіңіз',
+
+    warnTextAnswer: 'Барлық жауаптардың мәтінін толтырыңыз.',
+    warnTextQuest: 'Сұрақтың мәтінін енгізіңіз.',
+    warnSelectRightAnswer: 'Дұрыс жауапты таңдаңыз.',
+
+    description: 'Сипаттама',
+    enterDescription: 'Сипаттаманы енгізіңіз',
+    addMinMatching: 'Кем дегенде 2 картаны қосыңыз',
+    addQA: 'Сұрақ-жауап жұбын қосыңыз',
 }

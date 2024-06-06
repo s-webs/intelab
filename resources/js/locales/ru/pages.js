@@ -68,4 +68,31 @@ export default {
     confirmDeleteLesson: 'Вы уверены, что хотите удалить урок?',
     lessonSteps: 'Шаги урока',
 
+    tests: 'Тесты',
+    testQuiz: 'Тест (Quiz)',
+    testMatching: 'Сопоставление',
+    testWritten: 'Письменный',
+    addContent: 'Добавить контент',
+    addQuiz: 'Добавить тест',
+    addMatching: 'Добавить сопоставление',
+    addWritten: 'Добавить письменный экзамен',
+    quest: 'Вопрос',
+    answer: 'Ответ',
+    answers: 'Ответы',
+    questPoints: 'Баллы за вопрос',
+    addAnswer: 'Добавить ответ',
+
+    enterQuest: 'Введите вопрос',
+    enterAnswer: 'Введите ответ',
+
+    warnTextAnswer: 'Пожалуйста, заполните текст всех ответов.',
+    warnTextQuest: 'Пожалуйста, введите текст вопроса.',
+    warnSelectRightAnswer: 'Пожалуйста, выберите правильный ответ.',
+
+    description: 'Описание',
+    enterDescription: 'Введите описание',
+    addMinMatching: 'Добавьте минимум 2 сопоставления',
+    addQA: 'Добавить пару вопрос-ответ',
+
+
 }

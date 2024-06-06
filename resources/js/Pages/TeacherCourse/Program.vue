@@ -8,6 +8,7 @@ import {router, Link} from "@inertiajs/vue3";
 import AddLesson from "@/Pages/TeacherCourse/components/addLesson.vue";
 import EditLesson from "@/Pages/TeacherCourse/components/editLesson.vue";
 import {useI18n} from "vue-i18n";
+import Breadcrumbs from "@/Components/Breadcrumbs.vue";
 
 const {t, locale} = useI18n()
 
@@ -23,6 +24,12 @@ const showEditLessonModal = ref(false);
 const editingModule = ref(null)
 const editingLesson = ref(null)
 const currentModuleId = ref(null)
+
+const breadcrumbs = [
+    {label: 'menu.home', url: route('home'), icon: 'fa fa-home'},
+    {label: 'pages.myCourses', url: route('teacherCourse.index'), icon: 'fa-solid fa-graduation-cap'},
+    {label: 'pages.courseProgram', url: route('teacherCourse.program', props.course.id), icon: 'fa-solid fa-lines-leaning'},
+]
 
 // Функции для управления модальными окнами
 const openAddModuleModal = () => showAddModuleModal.value = true;
@@ -97,7 +104,8 @@ const deleteLesson = (lessonId) => {
 <template>
     <AppLayout title="Создать бесплатный курс">
         <div class="container mx-auto mt-8">
-            <div class="flex justify-between items-center border-b-2 border-main-blue pb-2">
+            <Breadcrumbs :breadcrumbs="breadcrumbs"/>
+            <div class="flex justify-between items-center border-b-2 border-main-blue pb-2 mt-8">
                 <h1 class="text-2xl font-medium text-main-blue">
                     {{ t('pages.courseProgram') }} - <span class="text-blue-500">{{ props.course.name }}</span>
                 </h1>

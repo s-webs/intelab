@@ -1,7 +1,9 @@
 <script setup>
 import {computed, ref} from "vue";
 import {router} from "@inertiajs/vue3";
+import {useI18n} from "vue-i18n";
 
+const {t, locale} = useI18n()
 const emit = defineEmits(['close', 'add']);
 const nextId = ref(1)
 
@@ -26,7 +28,7 @@ const removeItem = (index) => {
 };
 
 const canSubmit = computed(() => {
-    return items.value.length >= 2; // минимум две пары вопрос-ответ
+    return items.value.length >= 2;
 });
 
 const submitTest = () => {
@@ -49,13 +51,13 @@ const close = () => {
 <template>
     <div id="crud-modal" tabindex="-1" aria-hidden="true"
          class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] min-h-screen bg-gray-800 bg-opacity-75">
-        <div class="relative p-4 w-full max-h-full">
+        <div class="relative p-4 w-full xl:w-1/2  max-h-full">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow">
                 <!-- Modal header -->
                 <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                     <h3 class="text-lg font-semibold text-gray-900">
-                        Добавить тест (сопоставление)
+                        {{ t('pages.addMatching') }}
                     </h3>
                     <button @click="close"
                             type="button"
@@ -70,28 +72,29 @@ const close = () => {
                     <div class="col-span-2">
                         <label for="description"
                                class="block mb-2 text-sm font-medium text-gray-900">
-                            Описание теста
+                            {{ t('pages.description') }}
                         </label>
                         <textarea v-model="description" id="description" rows="4"
                                   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-4"
-                                  placeholder="Введите описание теста..." required></textarea>
+                                  :placeholder="t('pages.enterDescription')" required></textarea>
                     </div>
-                    <div class="font-bold my-2">Добавьте минимум 2 сопоставления</div>
+                    <div class="font-bold my-2">{{ t('pages.addMinMatching') }}</div>
                     <div v-for="(item, index) in items" :key="item.id" class="mb-4 flex items-center">
-                        <input v-model="item.question" type="text" placeholder="Вопрос"
+                        <input v-model="item.question" type="text" :placeholder="t('pages.quest')"
                                class="rounded w-full py-2 px-3 mr-2" required>
-                        <input v-model="item.answer" type="text" placeholder="Ответ" class="rounded w-full py-2 px-3" required>
+                        <input v-model="item.answer" type="text" :placeholder="t('pages.answer')" class="rounded w-full py-2 px-3"
+                               required>
                         <button @click="removeItem(index)" class="ml-2 px-4 py-2 bg-red-500 text-white rounded"><i
                             class="fa fa-trash"></i></button>
                     </div>
                     <button type="button" @click="addItem"
                             class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-4">
-                        Добавить пару вопрос-ответ<i class="fa fa-plus ml-2"></i>
+                        {{ t('pages.addQA') }}<i class="fa fa-plus ml-2"></i>
                     </button>
                     <button type="submit"
                             class="ml-2 text-white inline-flex items-center bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-4">
-                        Создать
-                        <i class="fa fa-plus ml-2"></i>
+                        {{ t('pages.save') }}
+                        <i class="fa fa-check ml-2"></i>
                     </button>
                 </form>
             </div>

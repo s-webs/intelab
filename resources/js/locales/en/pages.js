@@ -67,4 +67,30 @@ export default {
     confirmDeleteModule: 'Are you sure you want to delete the module?',
     confirmDeleteLesson: 'Are you sure you want to delete the lesson?',
     lessonSteps: 'Lesson steps',
+
+    tests: 'Tests',
+    testQuiz: 'Test (Quiz)',
+    testMatching: 'Matching',
+    testWritten: 'Written',
+    addContent: 'Add content',
+    addQuiz: 'Add test',
+    addMatching: 'Add matching test',
+    addWritten: 'Add a written exam',
+    quest: 'Question',
+    answer: 'Answer',
+    answers: 'Answers',
+    questPoints: 'Points per question',
+    addAnswer: 'Add answer',
+
+    enterQuest: 'Enter a question',
+    enterAnswer: 'Enter the answer',
+
+    warnTextAnswer: 'Please fill in the text of all the answers.',
+    warnTextQuest: 'Please enter the text of the question.',
+    warnSelectRightAnswer: 'Please choose the correct answer.',
+
+    description: 'Description',
+    enterDescription: 'Enter description',
+    addMinMatching: 'Add at least 2 matching',
+    addQA: 'Add a question and answer pair',
 }
