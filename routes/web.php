@@ -37,6 +37,13 @@ Route::middleware([
         Route::delete('course/lesson-{lesson_id}/delete', [\App\Http\Controllers\Teacher\CourseProgramController::class, 'destroyLesson'])->name('teacherCourse.lesson.delete');
         // Программа урока
         Route::get('lesson-{lesson_id}/program', [\App\Http\Controllers\Teacher\LessonProgramController::class, 'index'])->name('teacherCourse.lesson.program');
+        Route::post('course/lesson-{lesson_id}/add-step', [\App\Http\Controllers\Teacher\LessonProgramController::class, 'addStep'])->name('teacherCourse.lesson.addStep');
+        Route::put('edit-step-{step_id}', [\App\Http\Controllers\Teacher\LessonProgramController::class, 'updateStep'])->name('teacherCourse.lesson.updateStep');
+        Route::delete('course/step-{step_id}/delete', [\App\Http\Controllers\Teacher\LessonProgramController::class, 'deleteStep'])->name('teacherCourse.lesson.deleteStep');
+        // Тесты
+        Route::post('course/lesson-{lesson_id}/add-matching', [\App\Http\Controllers\Teacher\MatchingTestController::class, 'store'])->name('teacherCourse.lesson.addTest');
+        Route::post('course/lesson-{lesson_id}/add-quiz', [\App\Http\Controllers\Teacher\QuizController::class, 'store'])->name('teacherCourse.lesson.addQuiz');
+        Route::post('course/lesson-{lesson_id}/add-written', [\App\Http\Controllers\Teacher\WrittenController::class, 'store'])->name('teacherCourse.lesson.addWritten');
     });
 });
 

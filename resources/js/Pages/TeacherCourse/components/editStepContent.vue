@@ -51,6 +51,7 @@ const close = () => {
                 </div>
                 <!-- Modal body -->
                 <form @submit.prevent="updateStep" class="p-4 md:p-5">
+                    {{ console.log(editingContent.content.content) }}
                     <CKeditor
                         @sendContent="getContent"
                         :initialContent="editingContent.content.content"

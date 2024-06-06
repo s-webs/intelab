@@ -21,4 +21,19 @@ class Step extends Model
     {
         return $this->hasOne(StepContent::class);
     }
+
+    public function matching(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(MatchingTest::class);
+    }
+
+    public function quiz(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Quiz::class);
+    }
+
+    public function written(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Written::class);
+    }
 }
