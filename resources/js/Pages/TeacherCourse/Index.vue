@@ -95,7 +95,7 @@ const courses = props.courses
                                     <span class="hidden xl:inline xl:mr-2">{{ t('pages.statistics') }}</span>
                                     <i class="fa-solid fa-chart-line"></i>
                                 </a>
-                                <Link href="/"
+                                <Link :href="route('teacherCourse.program', course.id)"
                                       class="font-medium text-main-blue text-sm p-1 rounded-md border border-main-blue mr-2">
                                     <span class="hidden xl:inline xl:mr-2">{{ t('pages.courseProgram') }}</span>
                                     <i class="fa fa-layer-group"></i>

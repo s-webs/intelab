@@ -25,7 +25,11 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::prefix('teacher')->group(function () {
-        Route::resource('course', \App\Http\Controllers\Teacher\CourseController::class)->names('teacherCourse');
+        Route::resource('course', \App\Http\Controllers\Teacher\CourseController::class)->names('teacherCourse'); // Список курсов преподавателя
+        Route::get('course/{course_id}/program', [\App\Http\Controllers\Teacher\CourseProgramController::class, 'index'])->name('teacherCourse.program'); // Программа курса
+        Route::post('course/{course_id}/program', [\App\Http\Controllers\Teacher\CourseProgramController::class, 'storeModule'])->name('teacherCourse.module.store');
+        Route::put('course/module-{module_id}/update', [\App\Http\Controllers\Teacher\CourseProgramController::class, 'updateModule'])->name('teacherCourse.module.update');
+        Route::delete('course/module-{module_id}/delete', [\App\Http\Controllers\Teacher\CourseProgramController::class, 'destroyModule'])->name('teacherCourse.module.destroy');
     });
 });
 

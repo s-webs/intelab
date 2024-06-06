@@ -22,4 +22,9 @@ class Course extends Model
             ->withPivot(['progress', 'paid', 'completed_at', 'certificate_issued', 'certificate_path'])
             ->withTimestamps();
     }
+
+    public function modules(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Module::class);
+    }
 }

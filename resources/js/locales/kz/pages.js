@@ -44,4 +44,16 @@ export default {
     createCourseManual: 'Курсты құру бойынша нұсқаулық',
     createCourseConditions: 'Курсты құру шарттары',
 
+    notFoundModules: 'Сіздің курста модульдер жоқ',
+    addModule: 'Модуль қосу',
+
+    closeWindow: 'Терезені жабу',
+    moduleName: 'Модуль атауы',
+    enterModuleName: 'Модуль атауын енгізіңіз...',
+    moduleDescription: 'Модуль сипаттамасы',
+    enterModuleDescription: 'Модуль сипаттамасын енгізіңіз...',
+    lessonNotFound: 'Бұл модульде сабақтар жоқ',
+    editModule: 'Модульді өңдеу',
+    saveChanges: 'Өзгерістерді сақтау',
+
 }

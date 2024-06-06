@@ -44,4 +44,16 @@ export default {
     createCourseManual: 'Инструкция по созданию курса',
     createCourseConditions: 'Условия по созданию курса',
 
+    notFoundModules: 'В вашем курсе отсутствуют модули',
+    addModule: 'Добавить модуль',
+
+    closeWindow: 'Закрыть окно',
+    moduleName: 'Название модуля',
+    enterModuleName: 'Введите название модуля...',
+    moduleDescription: 'Описание модуля',
+    enterModuleDescription: 'Введите описание модуля...',
+    lessonNotFound: 'Уроки в данном модуле отсутствуют',
+    editModule: 'Редактировать модуль',
+    saveChanges: 'Сохранить изменения',
+
 }

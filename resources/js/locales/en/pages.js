@@ -43,4 +43,16 @@ export default {
 
     createCourseManual: 'Instructions for creating a course',
     createCourseConditions: 'Conditions for creating a course',
+
+    notFoundModules: 'There are no modules in your course',
+    addModule: 'Add module',
+
+    closeWindow: 'Close window',
+    moduleName: 'Module name',
+    enterModuleName: 'Enter the name of the module...',
+    moduleDescription: 'Description of the module',
+    enterModuleDescription: 'Enter a description of the module...',
+    lessonNotFound: 'There are no lessons in this module',
+    editModule: 'Edit the module',
+    saveChanges: 'Save changes',
 }
