@@ -55,5 +55,17 @@ export default {
     lessonNotFound: 'Бұл модульде сабақтар жоқ',
     editModule: 'Модульді өңдеу',
     saveChanges: 'Өзгерістерді сақтау',
+    addLesson: 'Сабақ қосыңыз',
+
+    addNewLesson: 'Модульге жаңа сабақ қосыңыз',
+    lessonName: 'Сабақтың атауы',
+    enterLessonName: 'Сабақтың атын енгізіңіз...',
+    lessonDescription: 'Сабақ сипаттамасы',
+    enterLessonDescription: 'Сабақтың сипаттамасын енгізіңіз...',
+    lessonEdit: 'Сабақты өңдеу',
+    lessonProgram: 'Сабақ бағдарламасы',
+    confirmDeleteModule: 'Сіз модульді жойғыңыз келетініне сенімдісіз бе?',
+    confirmDeleteLesson: 'Сіз сабақты жойғыңыз келетініне сенімдісіз бе?',
+    lessonSteps: 'Сабақ қадамдары',
 
 }

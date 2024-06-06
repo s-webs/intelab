@@ -1,3 +1,4 @@
+`
 <script setup>
 import {ref} from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
@@ -67,7 +68,7 @@ const editModule = (event, moduleData) => {
 };
 
 const deleteModule = (moduleId) => {
-    if (confirm('Вы уверены, что хотите удалить модуль?')) {
+    if (confirm(t('pages.confirmDeleteModule'))) {
         router.delete(route('teacherCourse.module.destroy', moduleId))
     }
 };
@@ -87,7 +88,7 @@ const editLesson = (data) => {
 };
 
 const deleteLesson = (lessonId) => {
-    if (confirm('Вы уверены, что хотите удалить урок?')) {
+    if (confirm(t('pages.confirmDeleteLesson'))) {
         router.delete(route('teacherCourse.lesson.delete', lessonId))
     }
 };
@@ -126,28 +127,32 @@ const deleteLesson = (lessonId) => {
                                     <span>{{ index + 1 }}. {{ lesson.name }}</span>
                                 </div>
                                 <div class="flex">
-                                    <Link :href="route('teacherCourse.lesson.program', [course.id, lesson.id])"
+                                    <Link :href="route('teacherCourse.lesson.program', lesson.id)"
                                           class="font-medium text-main-blue text-sm p-1 rounded-md border border-main-blue flex items-center mr-2">
-                                        <span class="mr-2">Программа урока</span> <i class="fa fa-layer-group"></i>
+                                        <span class="mr-2">{{ t('pages.lessonProgram') }}</span> <i
+                                        class="fa fa-layer-group"></i>
                                     </Link>
                                     <button @click="openEditLessonModal(lesson)"
                                             class="font-medium text-main-blue text-sm p-1 rounded-md border border-main-blue flex items-center mr-2">
-                                        <span class="mr-2">Редактировать</span><i class="fa fa-pen"></i></button>
+                                        <span class="mr-2">{{ t('pages.edit') }}</span><i class="fa fa-pen"></i>
+                                    </button>
                                     <button @click="deleteLesson(lesson.id)"
                                             class="font-medium text-sm text-red-600 p-1 rounded-md border border-red-600 flex items-center">
-                                        <span class="mr-2">Удалить</span><i class="fa fa-xmark"></i>
+                                        <span class="mr-2">{{ t('pages.delete') }}</span><i class="fa fa-xmark"></i>
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="text-end" v-else>
-                        <span class="inline-block text-lg font-medium text-gray-400 py-2">{{ t('pages.lessonNotFound') }}</span>
+                        <span class="inline-block text-lg font-medium text-gray-400 py-2">{{
+                                t('pages.lessonNotFound')
+                            }}</span>
                     </div>
                     <div class="flex mb-7 justify-end">
                         <button @click="openAddLessonModal(module.id)"
                                 class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-sm text-sm px-5 py-2.5 me-2 my-2 flex justify-end">
-                            Добавить урок
+                            {{ t('pages.addLesson') }}
                         </button>
                     </div>
                 </div>
@@ -192,3 +197,4 @@ const deleteLesson = (lessonId) => {
         </div>
     </AppLayout>
 </template>
+`

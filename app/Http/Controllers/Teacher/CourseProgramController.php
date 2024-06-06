@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\Lesson;
 use App\Models\Module;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -47,6 +48,36 @@ class CourseProgramController extends Controller
         $module = Module::query()->findOrFail($module_id);
         $courseId = $module->course->id;
         $module->delete();
+
+        return to_route('teacherCourse.program', $courseId);
+    }
+
+    public function storeLesson(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+            'module_id' => 'required|integer'
+        ]);
+        Lesson::create($validated);
+    }
+
+    public function updateLesson(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+        ]);
+        $lesson = Lesson::query()->findOrFail($request->id);
+        $lesson->update($validated);
+        return to_route('teacherCourse.program', $lesson->module->course->id);
+    }
+
+    public function destroyLesson($lesson_id)
+    {
+        $lesson = Lesson::query()->findOrFail($lesson_id);
+        $courseId = $lesson->module->course->id;
+        $lesson->delete();
 
         return to_route('teacherCourse.program', $courseId);
     }

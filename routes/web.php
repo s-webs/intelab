@@ -27,9 +27,16 @@ Route::middleware([
     Route::prefix('teacher')->group(function () {
         Route::resource('course', \App\Http\Controllers\Teacher\CourseController::class)->names('teacherCourse'); // Список курсов преподавателя
         Route::get('course/{course_id}/program', [\App\Http\Controllers\Teacher\CourseProgramController::class, 'index'])->name('teacherCourse.program'); // Программа курса
+        // Модули
         Route::post('course/{course_id}/program', [\App\Http\Controllers\Teacher\CourseProgramController::class, 'storeModule'])->name('teacherCourse.module.store');
         Route::put('course/module-{module_id}/update', [\App\Http\Controllers\Teacher\CourseProgramController::class, 'updateModule'])->name('teacherCourse.module.update');
         Route::delete('course/module-{module_id}/delete', [\App\Http\Controllers\Teacher\CourseProgramController::class, 'destroyModule'])->name('teacherCourse.module.destroy');
+        // Уроки
+        Route::post('course/add-lesson', [\App\Http\Controllers\Teacher\CourseProgramController::class, 'storeLesson'])->name('teacherCourse.lesson.store');
+        Route::put('course/lesson-{lesson_id}/update', [\App\Http\Controllers\Teacher\CourseProgramController::class, 'updateLesson'])->name('teacherCourse.lesson.update');
+        Route::delete('course/lesson-{lesson_id}/delete', [\App\Http\Controllers\Teacher\CourseProgramController::class, 'destroyLesson'])->name('teacherCourse.lesson.delete');
+        // Программа урока
+        Route::get('lesson-{lesson_id}/program', [\App\Http\Controllers\Teacher\LessonProgramController::class, 'index'])->name('teacherCourse.lesson.program');
     });
 });
 

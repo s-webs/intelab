@@ -55,4 +55,16 @@ export default {
     lessonNotFound: 'There are no lessons in this module',
     editModule: 'Edit the module',
     saveChanges: 'Save changes',
+    addLesson: 'Add lesson',
+
+    addNewLesson: 'Add a new lesson to the module',
+    lessonName: 'Lesson name',
+    enterLessonName: 'Enter the name of the lesson...',
+    lessonDescription: 'Description of the lesson',
+    enterLessonDescription: 'Enter a description of the lesson...',
+    lessonEdit: 'Edit the lesson',
+    lessonProgram: 'Lesson program',
+    confirmDeleteModule: 'Are you sure you want to delete the module?',
+    confirmDeleteLesson: 'Are you sure you want to delete the lesson?',
+    lessonSteps: 'Lesson steps',
 }

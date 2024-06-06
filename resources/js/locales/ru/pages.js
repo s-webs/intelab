@@ -55,5 +55,17 @@ export default {
     lessonNotFound: 'Уроки в данном модуле отсутствуют',
     editModule: 'Редактировать модуль',
     saveChanges: 'Сохранить изменения',
+    addLesson: 'Добавить урок',
+
+    addNewLesson: 'Добавить новый урок в модуль',
+    lessonName: 'Название урока',
+    enterLessonName: 'Введите название урока...',
+    lessonDescription: 'Описание урока',
+    enterLessonDescription: 'Введите описание урока...',
+    lessonEdit: 'Редактировать урок',
+    lessonProgram: 'Программа урока',
+    confirmDeleteModule: 'Вы уверены, что хотите удалить модуль?',
+    confirmDeleteLesson: 'Вы уверены, что хотите удалить урок?',
+    lessonSteps: 'Шаги урока',
 
 }
