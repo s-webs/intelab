@@ -93,4 +93,9 @@ export default {
     enterDescription: 'Enter description',
     addMinMatching: 'Add at least 2 matching',
     addQA: 'Add a question and answer pair',
+
+    categoryNotCourses: 'There are no courses in this category',
+
+    addFavorite: 'Add to Favorites',
+    startLearning: 'Start learning',
 }

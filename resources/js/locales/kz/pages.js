@@ -93,4 +93,9 @@ export default {
     enterDescription: 'Сипаттаманы енгізіңіз',
     addMinMatching: 'Кем дегенде 2 картаны қосыңыз',
     addQA: 'Сұрақ-жауап жұбын қосыңыз',
+
+    categoryNotCourses: 'Бұл санатта курстар жоқ',
+
+    addFavorite: 'Таңдаулыларға қосу',
+    startLearning: 'Оқуды бастау',
 }

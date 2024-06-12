@@ -4,6 +4,7 @@ import "swiper/css";
 import 'swiper/css/navigation';
 import {Navigation} from 'swiper/modules';
 import {computed, defineProps, ref} from 'vue';
+import {Link} from "@inertiajs/vue3";
 
 const props = defineProps({
     categories: Array
@@ -49,7 +50,8 @@ const filteredCategories = computed(() => {
                 }"
         >
             <swiper-slide v-for="slide in filteredCategories" :key="slide.id">
-                <a href="#" class="block border p-6 rounded-lg" :style="{ backgroundColor: slide.background_color}">
+                <Link :href="route('categoryCourses', slide.id)" class="block border p-6 rounded-lg"
+                      :style="{ backgroundColor: slide.background_color}">
                     <div class="mb-2 font-medium text-lg h-16" :style="{ color: slide.text_color}">
                         <span v-if="currentLanguage === 'kz'">{{ slide.name_kz }}</span>
                         <span v-else-if="currentLanguage === 'en'">{{ slide.name_en }}</span>
@@ -58,7 +60,7 @@ const filteredCategories = computed(() => {
                     <div class="mb-2" :style="{ color: slide.text_color}">
                         Количество курсов: <span>{{ slide.courses_count }}</span>
                     </div>
-                </a>
+                </Link>
             </swiper-slide>
         </swiper>
     </div>

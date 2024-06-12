@@ -16,7 +16,8 @@ use Inertia\Inertia;
 */
 
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+Route::get('/category-{category_id}/courses', [\App\Http\Controllers\User\CoursesController::class, 'index'])->name('categoryCourses');
+Route::get('/courses/course-{course_id}/show', [\App\Http\Controllers\User\CoursesController::class, 'show'])->name('showCourse');
 
 // Авторизация Laravel JetStream
 Route::middleware([

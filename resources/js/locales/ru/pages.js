@@ -94,5 +94,9 @@ export default {
     addMinMatching: 'Добавьте минимум 2 сопоставления',
     addQA: 'Добавить пару вопрос-ответ',
 
+    categoryNotCourses: 'В данной категории курсы отсутствуют',
+
+    addFavorite: 'Добавить в избранное',
+    startLearning: 'Начать обучение',
 
 }
