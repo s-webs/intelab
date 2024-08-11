@@ -46,6 +46,21 @@ Route::middleware([
         Route::post('course/lesson-{lesson_id}/add-quiz', [\App\Http\Controllers\Teacher\QuizController::class, 'store'])->name('teacherCourse.lesson.addQuiz');
         Route::post('course/lesson-{lesson_id}/add-written', [\App\Http\Controllers\Teacher\WrittenController::class, 'store'])->name('teacherCourse.lesson.addWritten');
     });
+
+    Route::prefix('student')->group(function () {
+        Route::post('course-{course_id}/enroll', [\App\Http\Controllers\User\CoursesController::class, 'enroll'])->name('enrollStudentCourse');
+        Route::get('course-{course_id}/learning', [\App\Http\Controllers\User\CoursesController::class, 'learning'])->name('learningStudentCourse');
+        Route::get('course-{course_id}/module-{module_id}/lessons', [\App\Http\Controllers\User\CoursesController::class, 'courseLessons'])->name('learningStudentLessons');
+        Route::get('course-{course_id}/lesson-{id}', [\App\Http\Controllers\Teacher\CourseController::class, 'lesson'])->name('lessonStudentCourse');
+        Route::get('course-{course_id}/step-{step_id}', [\App\Http\Controllers\User\CoursesController::class, 'step'])->name('stepStudentCourse');
+        Route::post('/steps/{step}/complete', [\App\Http\Controllers\User\ProgressController::class, 'updateStepProgress'])->name('steps.complete');
+        Route::post('/steps/{step}/quiz/complete', [\App\Http\Controllers\User\ProgressController::class, 'updateQuizProgress'])->name('quiz.complete');
+        Route::post('/modules/{module}/complete', [\App\Http\Controllers\User\ProgressController::class, 'updateModuleProgress'])->name('modules.complete');
+        Route::post('/lessons/{lesson}/complete', [\App\Http\Controllers\User\ProgressController::class, 'updateLessonProgress'])->name('lessons.complete');
+        Route::post('/course-{course_id}/complete', [\App\Http\Controllers\User\ProgressController::class, 'courseComplete'])->name('courseComplete');
+        Route::post('/update-progress', [\App\Http\Controllers\User\ProgressController::class, 'updateProgress'])->name('updateProgress');
+        Route::get('/courses', [\App\Http\Controllers\User\CoursesController::class, 'studentCourses'])->name('userCourses');
+    });
 });
 
 // Ckeditor

@@ -29,4 +29,9 @@ class CourseUser extends Model
     {
         return $this->belongsTo(Course::class);
     }
+
+    public function userProgress(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(UserProgress::class);
+    }
 }

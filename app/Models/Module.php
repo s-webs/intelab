@@ -22,4 +22,14 @@ class Module extends Model
     {
         return $this->hasMany(Lesson::class);
     }
+
+    public function moduleUsers(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ModuleUser::class);
+    }
+
+    public function userProgress(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(ModuleUser::class)->where('user_id', auth()->id());
+    }
 }

@@ -36,4 +36,9 @@ class Step extends Model
     {
         return $this->hasOne(Written::class);
     }
+
+    public function stepUsers(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(StepUser::class);
+    }
 }

@@ -1,12 +1,24 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import {computed} from "vue";
+import {router, usePage} from "@inertiajs/vue3";
 
 const props = defineProps({
     course: Object,
     lessonsTotalCount: Number,
     isUserEnrolled: Boolean
 })
+
+const page = usePage()
+const user = page.props.auth.user
+
+const isAuthenticated = () => {
+    return user !== null
+}
+
+const enroll = () => {
+    router.post(route('enrollStudentCourse', props.course.id))
+}
 </script>
 
 <template>
@@ -29,7 +41,7 @@ const props = defineProps({
                             <span class="mr-4 bg-main-blue px-3 py-2 rounded-md text-white text-sm"><i
                                 class="fa fa-star text-yellow-400 mr-2"></i>{{ course.rating }}</span>
                             <span class="bg-main-blue px-3 py-2 rounded-md text-white text-sm"><i
-                                class="fa fa-users mr-2"></i>0 обучающихся</span>
+                                class="fa fa-users mr-2"></i>{{course.users.length}} обучающихся</span>
                         </div>
                     </div>
                     <div class="w-3/12">
@@ -112,20 +124,20 @@ const props = defineProps({
                     </div>
                 </div>
                 <div class="w-1/5">
-                    <div v-if="isAuthenticated">
-<!--                        <button @click="enroll" v-if="course.type === 'free'"-->
-<!--                                class="w-full bg-green-700 hover:bg-green-800 text-center py-2 rounded-lg text-xl text-white">-->
-<!--                            <span v-if="isUserEnrolled">Продолжить обучение</span>-->
-<!--                            <span v-else>Начать обучение</span>-->
-<!--                        </button>-->
-<!--                        <button v-if="course.type === 'premium'"-->
-<!--                                class="w-full bg-green-700 text-center py-2 rounded-lg text-xl text-white">-->
-<!--                            <span>Купить</span>-->
-<!--                        </button>-->
-                        <!--                        <button-->
-                        <!--                            class="w-full border-2 border-red-700 hover:bg-red-800 text-center py-1 rounded-lg text-xl text-red-700 hover:text-red-100 mt-4">-->
-                        <!--                            <span>Хочу пройти</span><i class="fa fa-heart ml-3"></i>-->
-                        <!--                        </button>-->
+                    <div v-if="isAuthenticated()">
+                        <button @click="enroll" v-if="course.type === 'free'"
+                                class="w-full bg-green-700 hover:bg-green-800 text-center py-2 rounded-lg text-xl text-white">
+                            <span v-if="isUserEnrolled">Продолжить обучение</span>
+                            <span v-else>Начать обучение</span>
+                        </button>
+                        <button v-if="course.type === 'premium'"
+                                class="w-full bg-green-700 text-center py-2 rounded-lg text-xl text-white">
+                            <span>Купить</span>
+                        </button>
+                        <button
+                            class="w-full border-2 border-red-700 hover:bg-red-800 text-center py-1 rounded-lg text-xl text-red-700 hover:text-red-100 mt-4">
+                            <span>Хочу пройти</span><i class="fa fa-heart ml-3"></i>
+                        </button>
                     </div>
                     <div v-else>Авторизуйтесь, чтобы начать</div>
                     <div class="mt-8 bg-indigo-300 p-4 rounded-lg">

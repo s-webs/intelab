@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Teacher;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Course;
+use App\Models\Lesson;
+use App\Models\LessonUser;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -103,5 +105,27 @@ class CourseController extends Controller
     {
         $course = Course::findOrFail($id);
         $course->delete();
+    }
+
+    public function lesson($course_id, $lesson_id)
+    {
+        $user = auth()->user();
+        $courseUser = $user->courseUsers()->where('course_id', $course_id)->first();
+
+        LessonUser::query()->firstOrCreate(
+            [
+                'lesson_id' => $lesson_id,
+                'user_id' => $user->id,
+            ],
+            [
+                'started_at' => now(),
+            ]
+        );
+
+        $lesson = Lesson::with('module.course', 'steps.content', 'steps.matching', 'steps.quiz', 'steps.written')->findOrFail($lesson_id);
+        return Inertia::render('UserCourse/Lesson', [
+            'lesson' => $lesson,
+            'courseUser' => $courseUser
+        ]);
     }
 }

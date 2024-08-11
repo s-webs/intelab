@@ -22,4 +22,9 @@ class Lesson extends Model
     {
         return $this->hasMany(Step::class);
     }
+
+    public function lessonUsers(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(LessonUser::class);
+    }
 }
