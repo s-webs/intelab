@@ -1,12 +1,73 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
-import {computed} from "vue";
+import Notification from "@/Components/Notification.vue";
+import { computed, ref } from "vue";
+import { usePage, useForm } from "@inertiajs/vue3";
 
 const props = defineProps({
     course: Object,
     lessonsTotalCount: Number,
     isUserEnrolled: Boolean
-})
+});
+
+const page = usePage();
+const user = computed(() => page.props.auth.user);
+const isAuthenticated = computed(() => !!user.value);
+
+
+const notification = ref({
+    visible: false,
+    title: "",
+    message: "",
+    type: "info",
+    duration: 3000,
+});
+
+const showNotification = (title, message, type = "info", duration = 3000) => {
+    notification.value = {
+        visible: true,
+        title,
+        message,
+        type,
+        duration,
+    };
+};
+
+const form = useForm({
+    course_id: props.course.id
+});
+
+const addToFavorites = () => {
+    if (!user.value) {
+        showNotification("Ошибка", "Пожалуйста, авторизуйтесь, чтобы добавить курс в избранное", "error");
+        return;
+    }
+
+    form.post(route('addToFavorite'), {
+        onSuccess: () => {
+            showNotification("Успех", "Курс добавлен в избранное", "success");
+        },
+        onError: () => {
+            showNotification("Ошибка", "Произошла ошибка при добавлении в избранное", "error");
+        }
+    });
+};
+
+const removeFromFavorites = () => {
+    if (!user.value) {
+        showNotification("Ошибка", "Пожалуйста, авторизуйтесь, чтобы удалить курс из избранного", "error");
+        return;
+    }
+
+    form.delete(route('deleteFavorite'), {
+        onSuccess: () => {
+            showNotification("Успех", "Курс удален из избранного", "success");
+        },
+        onError: () => {
+            showNotification("Ошибка", "Произошла ошибка при удалении из избранного", "error");
+        }
+    });
+};
 </script>
 
 <template>
@@ -16,24 +77,23 @@ const props = defineProps({
                 <div class="flex py-8 items-center justify-between">
                     <div class="w-3/5">
                         <div>
-                            <h1 class="text-4xl text-white">
-                                {{ course.name }}
-                            </h1>
+                            <h1 class="text-4xl text-white">{{ course.name }}</h1>
                         </div>
-                        <div class="mt-8 text-white">
-                            {{ course.description }}
-                        </div>
+                        <div class="mt-8 text-white">{{ course.description }}</div>
                         <div class="mt-8">
-                            <span class="mr-4 bg-main-blue px-3 py-2 rounded-md text-white text-sm"><i
-                                class="fa fa-clock mr-2"></i>{{ course.duration }}</span>
-                            <span class="mr-4 bg-main-blue px-3 py-2 rounded-md text-white text-sm"><i
-                                class="fa fa-star text-yellow-400 mr-2"></i>{{ course.rating }}</span>
-                            <span class="bg-main-blue px-3 py-2 rounded-md text-white text-sm"><i
-                                class="fa fa-users mr-2"></i>0 обучающихся</span>
+              <span class="mr-4 bg-main-blue px-3 py-2 rounded-md text-white text-sm">
+                <i class="fa fa-clock mr-2"></i>{{ course.duration }}
+              </span>
+                            <span class="mr-4 bg-main-blue px-3 py-2 rounded-md text-white text-sm">
+                <i class="fa fa-star text-yellow-400 mr-2"></i>{{ course.rating }}
+              </span>
+                            <span class="bg-main-blue px-3 py-2 rounded-md text-white text-sm">
+                <i class="fa fa-users mr-2"></i>0 обучающихся
+              </span>
                         </div>
                     </div>
                     <div class="w-3/12">
-                        <img :src="course.image" alt="" class="rounded-lg">
+                        <img :src="course.image" alt="" class="rounded-lg" />
                     </div>
                 </div>
             </div>
@@ -42,39 +102,32 @@ const props = defineProps({
             <div class="flex justify-between">
                 <div class="w-3/4 border-r pr-4">
                     <div v-html="course.content"></div>
-                    <div class="font-bold text-2xl text-main-blue mt-8">
-                        Преподаватель
-                    </div>
+                    <div class="font-bold text-2xl text-main-blue mt-8">Преподаватель</div>
                     <div class="flex items-center border w-3/6 p-3 rounded-lg bg-indigo-300 mt-2">
                         <div class="w-20 mr-2">
-                            <img src="/assets/images/course.png" alt="" class="rounded-lg">
+                            <img src="/assets/images/course.png" alt="" class="rounded-lg" />
                         </div>
                         <div>
                             <a href="##" class="block text-indigo-700 font-bold">{{ course.user.name }}</a>
-                            <span
-                                class="text-sm text-indigo-500">Веб-разработка, HTML/CSS, Javascript, PHP, MySQL</span>
+                            <span class="text-sm text-indigo-500">Веб-разработка, HTML/CSS, Javascript, PHP, MySQL</span>
                         </div>
                     </div>
-                    <div class="font-bold text-2xl text-main-blue mt-8">
-                        Программа курса
-                    </div>
-                    <div class="">
+                    <div class="font-bold text-2xl text-main-blue mt-8">Программа курса</div>
+                    <div>
                         <div v-for="module in course.modules" class="mt-2">
                             <strong>{{ module.name }}</strong>
                             <ul class="list-decimal pl-8">
-                                <li v-for="lesson in module.lessons" class="">{{ lesson.name }}</li>
+                                <li v-for="lesson in module.lessons">{{ lesson.name }}</li>
                             </ul>
                         </div>
                     </div>
                     <div>
                         <!--COMMENTS-->
-                        <div class="font-bold text-2xl text-main-blue mt-8 border-b-2 border-main-blue pb-2">
-                            Отзывы о курсе
-                        </div>
+                        <div class="font-bold text-2xl text-main-blue mt-8 border-b-2 border-main-blue pb-2">Отзывы о курсе</div>
                         <div class="flex items-center mt-4">
                             <div class="text-3xl">
-                                <span class="text-main-blue font-bold">4</span> <i
-                                class="fa fa-star text-yellow-400"></i>
+                                <span class="text-main-blue font-bold">4</span>
+                                <i class="fa fa-star text-yellow-400"></i>
                             </div>
                             <div class="text-xs text-gray-300 border-l ml-3 pl-3">
                                 <div>
@@ -113,19 +166,33 @@ const props = defineProps({
                 </div>
                 <div class="w-1/5">
                     <div v-if="isAuthenticated">
-<!--                        <button @click="enroll" v-if="course.type === 'free'"-->
-<!--                                class="w-full bg-green-700 hover:bg-green-800 text-center py-2 rounded-lg text-xl text-white">-->
-<!--                            <span v-if="isUserEnrolled">Продолжить обучение</span>-->
-<!--                            <span v-else>Начать обучение</span>-->
-<!--                        </button>-->
-<!--                        <button v-if="course.type === 'premium'"-->
-<!--                                class="w-full bg-green-700 text-center py-2 rounded-lg text-xl text-white">-->
-<!--                            <span>Купить</span>-->
-<!--                        </button>-->
-                        <!--                        <button-->
-                        <!--                            class="w-full border-2 border-red-700 hover:bg-red-800 text-center py-1 rounded-lg text-xl text-red-700 hover:text-red-100 mt-4">-->
-                        <!--                            <span>Хочу пройти</span><i class="fa fa-heart ml-3"></i>-->
-                        <!--                        </button>-->
+                        <button
+                            @click="enroll"
+                            v-if="course.type === 'free'"
+                            class="w-full bg-green-700 hover:bg-green-800 text-center py-2 rounded-lg text-xl text-white"
+                        >
+                            <span v-if="isUserEnrolled">Продолжить обучение</span>
+                            <span v-else>Начать обучение</span>
+                        </button>
+                        <button v-if="course.type === 'premium'" class="w-full bg-green-700 text-center py-2 rounded-lg text-xl text-white">
+                            <span>Купить</span>
+                        </button>
+                        <button
+                            v-if="!isFavorite"
+                            @click="addToFavorites"
+                            class="w-full border-2 border-red-700 hover:bg-red-800 text-center py-1 rounded-lg text-xl text-red-700 hover:text-red-100 mt-4"
+                        >
+                            <span>Хочу пройти</span>
+                            <i class="fa fa-heart ml-3"></i>
+                        </button>
+                        <button
+                            v-if="isFavorite"
+                            @click="removeFromFavorites"
+                            class="w-full border-2 border-red-700 hover:bg-red-800 text-center py-1 rounded-lg text-xl text-red-700 hover:text-red-100 mt-4"
+                        >
+                            <span>Удалить из избранного</span>
+                            <i class="fa fa-heart ml-3"></i>
+                        </button>
                     </div>
                     <div v-else>Авторизуйтесь, чтобы начать</div>
                     <div class="mt-8 bg-indigo-300 p-4 rounded-lg">
@@ -137,8 +204,12 @@ const props = defineProps({
                 </div>
             </div>
         </div>
-        <div>
-            <!--COMMENTS-->
-        </div>
+        <Notification
+            v-if="notification.visible"
+            :title="notification.title"
+            :message="notification.message"
+            :type="notification.type"
+            :duration="notification.duration"
+        />
     </AppLayout>
 </template>

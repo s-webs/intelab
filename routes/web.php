@@ -45,6 +45,9 @@ Route::middleware([
         Route::post('course/lesson-{lesson_id}/add-matching', [\App\Http\Controllers\Teacher\MatchingTestController::class, 'store'])->name('teacherCourse.lesson.addTest');
         Route::post('course/lesson-{lesson_id}/add-quiz', [\App\Http\Controllers\Teacher\QuizController::class, 'store'])->name('teacherCourse.lesson.addQuiz');
         Route::post('course/lesson-{lesson_id}/add-written', [\App\Http\Controllers\Teacher\WrittenController::class, 'store'])->name('teacherCourse.lesson.addWritten');
+        // Избранное
+        Route::post('/add-favorites', [\App\Http\Controllers\User\FavoritesController::class, 'store'])->name('addToFavorite');
+        Route::delete('/delete-favorites', [\App\Http\Controllers\User\FavoritesController::class, 'destroy'])->name('deleteFavorite');
     });
 });
 

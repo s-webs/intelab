@@ -27,7 +27,6 @@ class CoursesController extends Controller
         $lessonsTotalCount = $course->modules->reduce(function ($carry, $module) {
             return $carry + $module->lessons->count();
         }, 0);
-
         return Inertia::render('Courses/Show', [
             'course' => $course,
             'lessonsTotalCount' => $lessonsTotalCount,
