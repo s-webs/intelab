@@ -40,7 +40,7 @@ const continueLesson = () => {
 <template>
     <AppLayout title="Главная">
         <Loading v-if="loading"/>
-        <div class="container mx-auto">
+        <div class="container mx-auto px-2">
             <div class="mt-8 border-b-2 border-main-blue pb-2">
                 <span class="text-2xl text-main-blue">
                     {{ lesson.name }}

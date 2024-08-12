@@ -172,7 +172,7 @@ if (localStorage.getItem('language')) {
                         <span>{{ t('menu.training') }}</span>
                     </li>
                     <li>
-                        <Link href="/"
+                        <Link :href="route('userCourses')"
                               class="flex border border-white hover:bg-main-blue hover:text-white items-center bg-white py-1 px-2 text-sm text-main-blue rounded-lg hover:bg-gray-100 mt-4">
                             <i class="fa-solid fa-graduation-cap mr-2"></i>
                             <span class="pt-0.5">{{ t('menu.myCourses') }}</span>

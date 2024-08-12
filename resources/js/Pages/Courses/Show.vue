@@ -24,9 +24,9 @@ const enroll = () => {
 <template>
     <AppLayout>
         <div class="bg-main-blue2 m-0 p-0">
-            <div class="container mx-auto">
-                <div class="flex py-8 items-center justify-between">
-                    <div class="w-3/5">
+            <div class="container mx-auto px-2">
+                <div class="flex py-8 items-center justify-between flex-col-reverse xl:flex-row">
+                    <div class="w-full xl:w-3/5">
                         <div>
                             <h1 class="text-4xl text-white">
                                 {{ course.name }}
@@ -44,27 +44,26 @@ const enroll = () => {
                                 class="fa fa-users mr-2"></i>{{course.users.length}} обучающихся</span>
                         </div>
                     </div>
-                    <div class="w-3/12">
-                        <img :src="course.image" alt="" class="rounded-lg">
+                    <div class="w-full xl:w-3/12">
+                        <img :src="course.image" alt="" class="rounded-lg mx-auto mb-8 xl:mb-0">
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container mx-auto mt-8">
-            <div class="flex justify-between">
-                <div class="w-3/4 border-r pr-4">
+        <div class="container mx-auto mt-8 px-2">
+            <div class="flex justify-between flex-col-reverse xl:flex-row">
+                <div class="w-full xl:w-3/4 border-r pr-4">
                     <div v-html="course.content"></div>
                     <div class="font-bold text-2xl text-main-blue mt-8">
                         Преподаватель
                     </div>
-                    <div class="flex items-center border w-3/6 p-3 rounded-lg bg-indigo-300 mt-2">
+                    <div class="flex items-center border w-full xl:w-3/6 p-3 rounded-lg bg-indigo-300 mt-2">
                         <div class="w-20 mr-2">
                             <img src="/assets/images/course.png" alt="" class="rounded-lg">
                         </div>
                         <div>
                             <a href="##" class="block text-indigo-700 font-bold">{{ course.user.name }}</a>
-                            <span
-                                class="text-sm text-indigo-500">Веб-разработка, HTML/CSS, Javascript, PHP, MySQL</span>
+                            <span class="text-sm text-indigo-500">Веб-разработка, HTML/CSS, Javascript, PHP, MySQL</span>
                         </div>
                     </div>
                     <div class="font-bold text-2xl text-main-blue mt-8">
@@ -123,7 +122,7 @@ const enroll = () => {
                         <!--/COMMENTS-->
                     </div>
                 </div>
-                <div class="w-1/5">
+                <div class="w-full xl:w-1/5 mb-4 xl:mb-0">
                     <div v-if="isAuthenticated()">
                         <button @click="enroll" v-if="course.type === 'free'"
                                 class="w-full bg-green-700 hover:bg-green-800 text-center py-2 rounded-lg text-xl text-white">

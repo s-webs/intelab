@@ -41,15 +41,15 @@ const allLessonsCompleted = computed(() => {
 <template>
     <AppLayout>
         <Loading v-if="loading"/>
-        <div class="container mx-auto py-8">
+        <div class="container mx-auto py-8 px-2">
             <div class="border-b-2 pb-2 flex items-center justify-between">
                 <h1 class="text-2xl text-main-blue font-medium">Уроки модуля "{{ module.name }}"</h1>
             </div>
 
             <div class="mt-8">
                 <div v-for="lesson in module.lessons"
-                     class="flex items-center justify-between p-5 border border-blue-400 rounded-md mb-4">
-                    <div>{{ lesson.name }}</div>
+                     class="flex items-center flex-col lg:flex-row justify-between p-5 border border-blue-400 rounded-md mb-4">
+                    <div class="mb-4 lg:mb-0">{{ lesson.name }}</div>
                     <div>
                         <!-- Проверяем, существует ли lesson_users[0] и есть ли у него completed_at -->
                         <Link v-if="lesson.lesson_users.length > 0 && lesson.lesson_users[0]?.completed_at"

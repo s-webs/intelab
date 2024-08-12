@@ -116,11 +116,6 @@ const cancelAction = () => {
                                               class="font-medium text-sm text-green-600 py-1 px-3 rounded-md border border-green-600 hover:bg-green-600 hover:text-white mr-4">
                                             Курс завершен
                                         </Link>
-                                        {{ console.log() }}
-                                        <button @click="showConfirmation(course)"
-                                                class="font-medium text-sm text-red-600 py-1 px-3 rounded-md border border-red-600 hover:bg-red-600 hover:text-white">
-                                            Завершить обучение
-                                        </button>
                                     </div>
                                     <div v-else>
                                         <div v-if="course.user_progress[0]">
@@ -146,7 +141,7 @@ const cancelAction = () => {
                                                 Продолжить обучение
                                             </Link>
                                         </div>
-                                        <button @click="showConfirmation(course)"
+                                        <button v-if="course.progress != 100" @click="showConfirmation(course)"
                                                 class="font-medium text-sm text-red-600 py-1 px-3 rounded-md border border-red-600 hover:bg-red-600 hover:text-white">
                                             Завершить обучение
                                         </button>
