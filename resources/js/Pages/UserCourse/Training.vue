@@ -76,8 +76,13 @@ onMounted(() => {
                             <Link v-if="isPreviousModuleCompleted(index)"
                                   :href="route('learningStudentLessons', [course.id, module.id])"
                                   class="bg-green-500 py-1 px-5 rounded-md text-green-800 font-bold">
-                                <span v-if="module.module_users[0]['completed']">Завершен <i class="fa fa-check ml-1"></i></span>
-                                <span v-else>Открыть</span>
+                                <span
+                                    v-if="module.module_users && module.module_users[0] && module.module_users[0]['completed']">
+                                    Завершен <i class="fa fa-check ml-1"></i>
+                                </span>
+                                <span v-else>
+                                    Открыть
+                                </span>
                             </Link>
                             <button v-else
                                     class="bg-gray-500 py-1 px-5 rounded-md text-gray-800 font-bold cursor-not-allowed"
@@ -100,7 +105,8 @@ onMounted(() => {
                         class="bg-blue-500 text-blue-800 font-bold px-5 py-2 rounded-md">
                     Завершить курс
                 </button>
-                <button v-else-if="courseUser.completed_at" class="bg-blue-500 text-blue-800 font-bold px-5 py-2 rounded-md cursor-not-allowed" disabled>
+                <button v-else-if="courseUser.completed_at"
+                        class="bg-blue-500 text-blue-800 font-bold px-5 py-2 rounded-md cursor-not-allowed" disabled>
                     Курс завершен
                 </button>
                 <button v-else class="bg-gray-500 text-gray-800 font-bold px-5 py-2 rounded-md cursor-not-allowed"
