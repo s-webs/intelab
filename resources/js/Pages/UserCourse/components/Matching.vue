@@ -1,7 +1,7 @@
 <script setup>
 import {ref, onMounted, computed} from 'vue';
 import draggable from 'vuedraggable';
-import {defineProps} from 'vue';
+import {defineProps, defineEmits} from 'vue';
 import {router} from "@inertiajs/vue3";
 import Loading from "@/Components/Loading.vue";
 
@@ -21,21 +21,25 @@ const userAnswers = ref([])
 const isChecked = ref(false);
 const stepUserAnswers = ref(props.stepUser?.answers);
 const isTestCompleted = computed(() => stepUserAnswers.value && stepUserAnswers.value.length > 0);
-const loading = ref(false)
+const loading = ref(false);
+
+// Функция для перемешивания массива (Fisher-Yates Shuffle)
+const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
 
 onMounted(() => {
     if (isTestCompleted.value) {
         userAnswers.value = stepUserAnswers.value;
         isChecked.value = true;
     } else {
-        draggableAnswers.value = [...answers.value];
+        draggableAnswers.value = shuffleArray([...answers.value]); // Перемешиваем ответы
     }
 });
-
-const check = () => {
-    const isIdentical = draggableAnswers.value.every((value, index) => value === answers.value[index]);
-    console.log('Массивы идентичны (every):', isIdentical);
-}
 
 const checkAnswers = () => {
     const isIdentical = draggableAnswers.value.every((value, index) => value === answers.value[index]);
@@ -72,7 +76,6 @@ const checkAnswers = () => {
 
 <template>
     <div class="container mx-auto p-4">
-        <button @click="debug">DEBUG</button>
         <Loading v-if="loading"/>
         <div class="text-2xl font-medium mb-4">
             {{ test.description }}

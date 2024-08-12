@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { router } from "@inertiajs/vue3";
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 import Matching from "@/Pages/UserCourse/components/Matching.vue";
 import Quiz from "@/Pages/UserCourse/components/Quiz.vue";
 import Written from "@/Pages/UserCourse/components/Written.vue";
@@ -18,6 +18,26 @@ const props = defineProps({
 const isAnswersChecked = ref(false);
 const isLastStep = computed(() => props.currentStepIndex === props.steps.length - 1);
 const loading = ref(false);
+
+// Функция для перемешивания массива (Fisher-Yates Shuffle)
+const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+};
+
+const initializeStep = () => {
+    if (props.step.type === 'matching' && !props.stepUser?.completed) {
+        // Перемешиваем ответы, если сопоставление не выполнено
+        props.step.matching.answers = shuffleArray([...props.step.matching.answers]);
+    }
+};
+
+onMounted(() => {
+    initializeStep();
+});
 
 const completeAndNavigateToStep = async (currentStepId, stepIndex) => {
     try {
@@ -77,8 +97,6 @@ const lessonComplete = async () => {
 
         await router.post(route('lessons.complete', props.step.lesson.id));
 
-        // await router.visit(route('learningStudentLessons', [props.step.lesson.module.course.id, props.step.lesson.module.id]));
-
         loading.value = false;
     } catch (error) {
         console.error("Ошибка при завершении урока:", error);
@@ -109,7 +127,7 @@ const handleAnswersChecked = (checked) => {
             </div>
             <div class="flex items-center justify-between mt-10">
                 <div class="flex items-center flex-wrap">
-                    <div v-for="(step, index) in steps">
+                    <div v-for="(step, index) in steps" :key="step.id">
                         <button v-if="index === currentStepIndex" class="bg-green-400 m-1 w-12" disabled>
                             <span v-if="step.completed"><i class="fa fa-check"></i></span>
                             <span v-else>{{ index + 1 }}</span>
@@ -121,11 +139,11 @@ const handleAnswersChecked = (checked) => {
                     </div>
                 </div>
                 <div v-if="!isLastStep">
-                    <button v-if="step.type === 'content'" @click="goToNextStep"
+                    <button v-if="step.type === 'content' || isAnswersChecked.value" @click="goToNextStep"
                             class="bg-green-500 text-green-800 font-bold px-3 py-1 rounded-md">
                         Продолжить
                     </button>
-                    <div v-else @click="goToNextStep">
+                    <div v-else>
                         <button v-if="stepUser"
                                 class="bg-green-500 text-green-800 font-bold px-3 py-1 rounded-md">
                             Продолжить
@@ -137,16 +155,10 @@ const handleAnswersChecked = (checked) => {
                     </div>
                 </div>
                 <div v-else>
-                    <div @click="goToNextStep">
-                        <button v-if="stepUser" @click="lessonComplete"
-                                class="bg-blue-500 text-blue-800 font-bold px-3 py-1 border-2 rounded-md">
-                            Завершить урок
-                        </button>
-                        <button v-else disabled
-                                class="bg-gray-500 text-gray-800 font-bold px-3 py-1 rounded-md cursor-not-allowed">
-                            Отправьте ваши ответы
-                        </button>
-                    </div>
+                    <button @click="lessonComplete"
+                            class="bg-blue-500 text-blue-800 font-bold px-3 py-1 border-2 rounded-md">
+                        Завершить урок
+                    </button>
                 </div>
             </div>
         </div>

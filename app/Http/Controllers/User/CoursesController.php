@@ -17,13 +17,34 @@ class CoursesController extends Controller
 {
     public function index($category_id)
     {
+        // Получаем родительскую категорию
         $category = Category::findOrFail($category_id);
-        $courses = $category->courses()->where('hidden', false)->where('status', true)->get();
+
+        // Получаем все дочерние категории, у которых есть курсы
+        $childCategories = Category::where('parent_id', $category->id)
+            ->whereHas('courses', function ($query) {
+                $query->where('hidden', false)->where('status', true);
+            })
+            ->with(['courses' => function ($query) {
+                $query->where('hidden', false)->where('status', true);
+            }])
+            ->get();
+
+        // Извлекаем все курсы из родительской и дочерних категорий
+        $courses = Course::where('category_id', $category->id)
+            ->with('user')
+            ->orWhereIn('category_id', $childCategories->pluck('id'))
+            ->where('hidden', false)
+            ->where('status', true)
+            ->get();
+
         return Inertia::render('Courses/Index', [
             'category' => $category,
-            'courses' => $courses
+            'courses' => $courses,
+            'childCategories' => $childCategories
         ]);
     }
+
 
     public function show(Request $request, $course_id)
     {
@@ -102,7 +123,7 @@ class CoursesController extends Controller
         $module = Module::with([
             'course',
             'moduleUsers' => function ($query) {
-            $query->where('user_id', auth()->user()->id);
+                $query->where('user_id', auth()->user()->id);
             },
             'lessons' => function ($query) {
                 $query->with(['lessonUsers' => function ($query) {
@@ -186,5 +207,15 @@ class CoursesController extends Controller
         return Inertia::render('UserCourse/Index', [
             'courses' => $courses
         ]);
+    }
+
+    public function addPoint(Request $request)
+    {
+        $user = auth()->user();
+        $courseUser = $user->courseUsers->where('course_id', $request->course_id)->first();
+        $points = $courseUser->points;
+        $points += $request->points;
+        $courseUser->points = $points;
+        $courseUser->save();
     }
 }

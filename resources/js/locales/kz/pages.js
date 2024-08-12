@@ -98,4 +98,7 @@ export default {
 
     addFavorite: 'Таңдаулыларға қосу',
     startLearning: 'Оқуды бастау',
+
+    filterByCategory: 'Санат бойынша сүзу',
+    allCategories: 'Барлық санаттар',
 }

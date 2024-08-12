@@ -1,21 +1,33 @@
 <script setup>
-import {Swiper, SwiperSlide} from "swiper/vue";
+import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import 'swiper/css/navigation';
-import {Navigation} from 'swiper/modules';
-import {computed, defineProps, ref} from 'vue';
-import {Link} from "@inertiajs/vue3";
+import { Navigation } from 'swiper/modules';
+import { computed, defineProps, ref } from 'vue';
+import { Link } from "@inertiajs/vue3";
 
 const props = defineProps({
     categories: Array
-})
+});
 
 const currentLanguage = ref(localStorage.getItem('language') || 'en');
 
+// Фильтрация и суммирование курсов для родительских категорий
 const filteredCategories = computed(() => {
     return props.categories
-        .filter(category => category.parent_id !== null)
-        .sort((a, b) => b.courses_count - a.courses_count);
+        .filter(category => category.parent_id === null)
+        .map(parentCategory => {
+            // Суммируем количество курсов у всех дочерних категорий
+            const totalCourses = props.categories
+                .filter(category => category.parent_id === parentCategory.id)
+                .reduce((sum, category) => sum + category.courses_count, parentCategory.courses_count);
+
+            return {
+                ...parentCategory,
+                totalCourses
+            };
+        })
+        .sort((a, b) => b.totalCourses - a.totalCourses);
 });
 </script>
 
@@ -58,7 +70,7 @@ const filteredCategories = computed(() => {
                         <span v-else>{{ slide.name }}</span>
                     </div>
                     <div class="mb-2" :style="{ color: slide.text_color}">
-                        Количество курсов: <span>{{ slide.courses_count }}</span>
+                        Количество курсов: <span>{{ slide.totalCourses }}</span>
                     </div>
                 </Link>
             </swiper-slide>

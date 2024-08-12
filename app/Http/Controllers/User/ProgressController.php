@@ -112,4 +112,19 @@ class ProgressController extends Controller
         $courseUser->completed_at = now();
         $courseUser->save();
     }
+
+    public function updateWrittenProgress(Request $request, $stepId)
+    {
+        $user = $request->user();
+        $step = Step::findOrFail($stepId);
+
+        $progress = StepUser::query()->firstOrCreate([
+            'user_id' => $user->id,
+            'step_id' => $stepId,
+        ], [
+            'completed' => true,
+            'completed_at' => now(),
+            'answers' => $request->answers
+        ]);
+    }
 }

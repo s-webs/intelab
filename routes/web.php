@@ -63,9 +63,11 @@ Route::middleware([
         Route::post('/steps/{step}/quiz/complete', [\App\Http\Controllers\User\ProgressController::class, 'updateQuizProgress'])->name('quiz.complete');
         Route::post('/modules/{module}/complete', [\App\Http\Controllers\User\ProgressController::class, 'updateModuleProgress'])->name('modules.complete');
         Route::post('/lessons/{lesson}/complete', [\App\Http\Controllers\User\ProgressController::class, 'updateLessonProgress'])->name('lessons.complete');
+        Route::post('/steps/{step}/written/complete', [\App\Http\Controllers\User\ProgressController::class, 'updateWrittenProgress'])->name('written.complete');
         Route::post('/course-{course_id}/complete', [\App\Http\Controllers\User\ProgressController::class, 'courseComplete'])->name('courseComplete');
         Route::post('/update-progress', [\App\Http\Controllers\User\ProgressController::class, 'updateProgress'])->name('updateProgress');
         Route::get('/courses', [\App\Http\Controllers\User\CoursesController::class, 'studentCourses'])->name('userCourses');
+        Route::post('/add-point', [\App\Http\Controllers\User\CoursesController::class, 'addPoint'])->name('addPoint');
     });
 });
 

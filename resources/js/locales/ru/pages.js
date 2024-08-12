@@ -99,4 +99,8 @@ export default {
     addFavorite: 'Добавить в избранное',
     startLearning: 'Начать обучение',
 
+    filterByCategory: 'Фильтрация по категориям',
+    allCategories: 'Все категории',
+
+
 }

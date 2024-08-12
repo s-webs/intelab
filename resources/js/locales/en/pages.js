@@ -98,4 +98,7 @@ export default {
 
     addFavorite: 'Add to Favorites',
     startLearning: 'Start learning',
+
+    filterByCategory: 'Filter by category',
+    allCategories: 'All categories',
 }
