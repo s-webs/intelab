@@ -149,6 +149,11 @@ if (localStorage.getItem('language')) {
                         <span>{{ t('menu.main') }}</span>
                     </li>
                     <li>
+                        <Link :href="route('profile.show')"
+                              class="flex border border-white hover:bg-main-blue hover:text-white items-center bg-white py-1 px-2 text-sm text-main-blue rounded-lg hover:bg-gray-100 mt-4">
+                            <i class="fa fa-user mr-2"></i>
+                            <span class="pt-0.5">Профиль</span>
+                        </Link>
                         <Link href="/"
                               class="flex border border-white hover:bg-main-blue hover:text-white items-center bg-white py-1 px-2 text-sm text-main-blue rounded-lg hover:bg-gray-100 mt-4">
                             <i class="fa fa-home mr-2"></i>
