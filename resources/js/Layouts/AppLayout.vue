@@ -81,7 +81,7 @@ if (localStorage.getItem('language')) {
                     <div class="ml-3 hidden lg:block">
                         <div v-if="user" class="ml-3">
                             <button @click="toggleMenu" class="block">
-                                <img class="w-12 h-12 rounded-full border" :src="user.profile_photo_path" alt="avatar"/>
+                                <img class="w-12 h-12 rounded-full border" :src="user.photo" alt="avatar"/>
                             </button>
                             <div v-if="menuOpen"
                                  class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
@@ -125,7 +125,7 @@ if (localStorage.getItem('language')) {
                     <li class="lg:hidden">
                         <div v-if="user" class="flex justify-between items-center">
                             <button @click="toggleMenu" class="flex items-center">
-                                <img class="w-8 h-8 rounded-full border" :src="user.profile_photo_path" alt="avatar"/>
+                                <img class="w-8 h-8 rounded-full border" :src="user.photo" alt="avatar"/>
                                 <span class="ml-2 text-white">{{ user.name }}</span>
                             </button>
                             <div>

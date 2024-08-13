@@ -121,7 +121,7 @@ const enroll = () => {
                     </div>
                     <div class="flex items-center border w-full xl:w-3/6 p-3 rounded-lg bg-indigo-300 mt-2">
                         <div class="w-20 mr-2">
-                            <img src="/assets/images/course.png" alt="" class="rounded-lg">
+                            <img :src="course.user.photo" alt="" class="rounded-lg">
                         </div>
                         <div>
                             <a href="##" class="block text-indigo-700 font-bold">{{ course.user.name }}</a>
