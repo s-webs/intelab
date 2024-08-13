@@ -60,26 +60,46 @@ const goToNextStep = () => {
 }
 
 const lessonComplete = () => {
-    loading.value = true
-    router.post(route('updateProgress'), {
-        course_id: props.step.lesson.module.course.id,
-        course_user_id: props.courseUser.id,
-        type: 'lesson',
-        target_id: props.step.lesson.id,
-        course_complete: false
-    }, {
-        onProgress: progress => {
-            router.post(route('lessons.complete', props.step.lesson.id))
-        },
-        onSuccess: progress => {
-            router.post(route('lessons.complete', props.step.lesson.id))
+    loading.value = true;
+
+    // Отправляем запрос на обновление прогресса
+    // router.post(route('lessons.complete'), {
+    //     course_id: props.step.lesson.module.course.id,
+    //     course_user_id: props.courseUser.id,
+    //     type: 'lesson',
+    //     target_id: props.step.lesson.id,
+    //     course_complete: false
+    // }, {
+    //     onSuccess: () => {
+    //
+    //         completeLesson();
+    //     },
+    //     onError: () => {
+    //         // Обработка ошибки, если обновление прогресса не удалось
+    //         loading.value = false;
+    //         alert('Произошла ошибка при обновлении прогресса.');
+    //     }
+    // });
+    completeLesson()
+};
+
+const completeLesson = () => {
+    router.post(route('lessons.complete', props.step.lesson.id), {
+        onSuccess: () => {
+            // Переход к следующему шагу после завершения урока
             setTimeout(() => {
-                router.visit(route('learningStudentLessons', [props.step.lesson.module.course.id, props.step.lesson.module.id]))
-                loading.value = false
+                router.visit(route('learningStudentLessons', [props.step.lesson.module.course.id, props.step.lesson.module.id]));
+                loading.value = false;
             }, 3000);
+        },
+        onError: () => {
+            // Обработка ошибки, если завершение урока не удалось
+            loading.value = false;
+            alert('Произошла ошибка при завершении урока.');
         }
-    })
-}
+    });
+};
+
 
 const handleAnswersChecked = (checked) => {
     isAnswersChecked.value = checked
@@ -153,7 +173,7 @@ const handleAnswersChecked = (checked) => {
                             Завершить урок
                         </button>
                     </div>
-                    <div v-else @click="goToNextStep">
+                    <div v-else>
                         <button v-if="stepUser" @click="lessonComplete"
                                 class="bg-blue-500 text-blue-800 font-bold px-3 py-1 rounded-md">
                             Завершить урок

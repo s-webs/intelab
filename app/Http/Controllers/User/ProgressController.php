@@ -46,10 +46,6 @@ class ProgressController extends Controller
 
     public function updateProgress(Request $request)
     {
-
-        if ($request->type === 'lesson') {
-            dd($request);
-        }
         UserProgress::query()->updateOrCreate(
             [
                 'course_id' => $request->course_id,
