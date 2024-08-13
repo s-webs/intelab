@@ -9,5 +9,6 @@ export default {
     privacyPolicy: 'Privacy policy',
     license: 'License',
     contacts: 'Contacts',
-    allRR: 'All rights reserved'
+    allRR: 'All rights reserved',
+    favorites: 'Favourites',
 }

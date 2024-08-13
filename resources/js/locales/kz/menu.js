@@ -9,5 +9,6 @@ export default {
     privacyPolicy: 'Құпиялылық саясаты',
     license: 'Лицензия',
     contacts: 'Байланыс',
-    allRR: 'Барлық құқықтар қорғалған'
+    allRR: 'Барлық құқықтар қорғалған',
+    favorites: 'Таңдаулылар',
 }

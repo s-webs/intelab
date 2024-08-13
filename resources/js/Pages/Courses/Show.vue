@@ -24,7 +24,7 @@ const loadFavorites = async () => {
         const data = await response.json();
         favorites.value = data.favorites.map(favorite => favorite.course_id); // Сохраняем только ID курсов
     } catch (error) {
-        alert('Произошла ошибка при загрузке избранных курсов.');
+        console.log('Произошла ошибка при загрузке избранных курсов.');
     }
 };
 
@@ -64,7 +64,7 @@ const toggleFavorite = async () => {
             favorites.value.push(props.course.id);
         }
     } catch (error) {
-        alert('Произошла ошибка при изменении статуса избранного.');
+        console.log('Произошла ошибка при изменении статуса избранного.');
     }
 };
 

@@ -9,5 +9,6 @@ export default {
     privacyPolicy: 'Политика конфиденциальности',
     license: 'Лицензия',
     contacts: 'Контакты',
-    allRR: 'Все права защищены'
+    allRR: 'Все права защищены',
+    favorites: 'Избранное',
 }

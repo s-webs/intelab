@@ -30,7 +30,7 @@ Route::middleware([
     Route::get('/getFavorites', [\App\Http\Controllers\User\FavoritesController::class, 'getFavorites'])->name('getFavorites');
     Route::post('/removeFromFavorite', [\App\Http\Controllers\User\FavoritesController::class, 'destroy'])->name('removeFromFavorite');
     Route::post('/addToFavorite', [\App\Http\Controllers\User\FavoritesController::class, 'store'])->name('addToFavorite');
-
+    Route::get('/favorites', [\App\Http\Controllers\User\FavoritesController::class, 'index'])->name('favorites');
 
     Route::prefix('teacher')->group(function () {
         Route::resource('course', \App\Http\Controllers\Teacher\CourseController::class)->names('teacherCourse'); // Список курсов преподавателя

@@ -144,7 +144,7 @@ if (localStorage.getItem('language')) {
                             </Link>
                         </div>
                     </li>
-                    <!-- Основыные -->
+                    <!-- Основные -->
                     <li class="text-sm text-gray-400 border-b border-gray-400 mt-4">
                         <span>{{ t('menu.main') }}</span>
                     </li>
@@ -185,6 +185,13 @@ if (localStorage.getItem('language')) {
                               class="flex border border-white hover:bg-main-blue hover:text-white items-center bg-white py-1 px-2 text-sm text-main-blue rounded-lg hover:bg-gray-100 mt-4">
                             <i class="fa-solid fa-graduation-cap mr-2"></i>
                             <span class="pt-0.5">{{ t('menu.myCourses') }}</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link :href="route('favorites')"
+                              class="flex border border-white hover:bg-main-blue hover:text-white items-center bg-white py-1 px-2 text-sm text-main-blue rounded-lg hover:bg-gray-100 mt-4">
+                            <i class="fa-solid fa-heart mr-2"></i>
+                            <span class="pt-0.5">{{ t('menu.favorites') }}</span>
                         </Link>
                     </li>
                 </ul>

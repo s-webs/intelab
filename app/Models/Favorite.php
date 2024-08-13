@@ -10,4 +10,9 @@ class Favorite extends Model
         'user_id',
         'course_id',
     ];
+
+    public function course(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Course::class);
+    }
 }

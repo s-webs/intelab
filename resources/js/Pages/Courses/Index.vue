@@ -29,7 +29,7 @@ const loadFavorites = async () => {
         const data = await response.json();
         favorites.value = data.favorites.map(favorite => favorite.course_id); // Сохраняем только ID курсов
     } catch (error) {
-        alert('Произошла ошибка при загрузке избранных элементов.');
+        console.log('Произошла ошибка при загрузке избранных элементов.');
     }
 };
 
@@ -49,7 +49,7 @@ const toggleFavorite = async (course) => {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 },
-                body: JSON.stringify({ course_id: course.id })
+                body: JSON.stringify({course_id: course.id})
             });
             const data = await response.json();
             console.log(data.message); // Выведем сообщение для проверки
@@ -62,17 +62,16 @@ const toggleFavorite = async (course) => {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 },
-                body: JSON.stringify({ course_id: course.id })
+                body: JSON.stringify({course_id: course.id})
             });
             const data = await response.json();
             console.log(data.message); // Выведем сообщение для проверки
             favorites.value.push(course.id);
         }
     } catch (error) {
-        alert('Произошла ошибка при изменении статуса избранного.');
+        console.log('Произошла ошибка при изменении статуса избранного.');
     }
 };
-
 
 // Загрузить избранные курсы при монтировании компонента
 onMounted(() => {
@@ -117,9 +116,11 @@ function filterCourses() {
                             <li v-for="childCategory in childCategories" :key="childCategory.id">
                                 <button @click="selectedCategory = childCategory.id"
                                         class="w-full text-left p-2 rounded hover:bg-blue-200">
-                                    - {{ locale === 'kz' ? childCategory.name_kz :
-                                    locale === 'en' ? childCategory.name_en :
-                                        childCategory.name }}
+                                    - {{
+                                        locale === 'kz' ? childCategory.name_kz :
+                                            locale === 'en' ? childCategory.name_en :
+                                                childCategory.name
+                                    }}
                                 </button>
                             </li>
                         </ul>
@@ -127,7 +128,7 @@ function filterCourses() {
                 </div>
                 <!-- Список курсов -->
                 <div class="w-full md:w-3/4 xl:w-4/5 px-4">
-                    <div class="bg-white shadow-md rounded p-4 mb-4 md:p-6 lg:p-8 flex flex-wrap border border-blue-300"
+                    <div class="bg-white shadow-md rounded p-4 mb-4 md:p-6 lg:p-8 flex flex-wrap flex-col lg:flex-row items-center border border-blue-300"
                          v-for="course in filterCourses()" :key="course.id">
                         <Link :href="route('showCourse', course.id)">
                             <img :src="course.image" :alt="course.name" class="w-48 h-48 object-cover rounded mr-4">
@@ -147,18 +148,18 @@ function filterCourses() {
                                 </div>
                             </div>
                             <div class="flex flex-wrap justify-between items-center">
-                                <div
-                                    class="bg-green-400 text-white font-bold py-2 px-4 rounded w-full lg:w-auto text-center">
-                                    0 ₸
-                                </div>
-                                <div>
+<!--                                <div-->
+<!--                                    class="bg-green-400 text-white font-bold py-2 px-4 rounded w-full lg:w-auto text-center">-->
+<!--                                    0 ₸-->
+<!--                                </div>-->
+                                <div class="text-center">
                                     <button v-if="isAuthenticated()"
                                             @click="toggleFavorite(course)"
-                                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-full lg:w-auto mt-2 lg:mt-0">
+                                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-full lg:w-auto lg:mb-0 mb-4 mt-2 lg:mt-0">
                                         {{ isFavorite(course.id) ? t('pages.removeFavorite') : t('pages.addFavorite') }}
                                     </button>
                                     <a :href="route('showCourse', course.id)"
-                                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded lg:ml-4 w-full lg:w-auto mt-2 lg:mt-0">
+                                       class= "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded lg:ml-4 w-full lg:w-auto lg:mt-0">
                                         {{ t('pages.startLearning') }}
                                     </a>
                                 </div>
