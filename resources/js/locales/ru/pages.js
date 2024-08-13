@@ -102,5 +102,7 @@ export default {
     filterByCategory: 'Фильтрация по категориям',
     allCategories: 'Все категории',
 
+    removeFavorite: 'Удалить из избранного',
+
 
 }

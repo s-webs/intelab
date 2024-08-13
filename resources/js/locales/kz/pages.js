@@ -101,4 +101,6 @@ export default {
 
     filterByCategory: 'Санат бойынша сүзу',
     allCategories: 'Барлық санаттар',
+
+    removeFavorite: 'Таңдаулылардан жою',
 }

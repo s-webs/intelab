@@ -1,24 +1,83 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
-import {computed} from "vue";
-import {router, usePage} from "@inertiajs/vue3";
+import {ref, onMounted} from "vue";
+import {usePage} from "@inertiajs/vue3";
 
 const props = defineProps({
     course: Object,
     lessonsTotalCount: Number,
     isUserEnrolled: Boolean
-})
+});
 
-const page = usePage()
-const user = page.props.auth.user
+const page = usePage();
+const user = page.props.auth.user;
+const favorites = ref([]);
 
 const isAuthenticated = () => {
-    return user !== null
-}
+    return user !== null;
+};
+
+// Функция для загрузки избранных курсов
+const loadFavorites = async () => {
+    try {
+        const response = await fetch('/getFavorites');
+        const data = await response.json();
+        favorites.value = data.favorites.map(favorite => favorite.course_id); // Сохраняем только ID курсов
+    } catch (error) {
+        alert('Произошла ошибка при загрузке избранных курсов.');
+    }
+};
+
+// Проверка, находится ли курс в избранном
+const isFavorite = (courseId) => {
+    return favorites.value.includes(courseId);
+};
+
+// Функция для добавления или удаления из избранного
+const toggleFavorite = async () => {
+    try {
+        if (isFavorite(props.course.id)) {
+            // Удалить из избранного
+            const response = await fetch('/removeFromFavorite', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({course_id: props.course.id})
+            });
+            const data = await response.json();
+            console.log(data.message); // Вывод сообщения в консоль
+            favorites.value = favorites.value.filter(id => id !== props.course.id);
+        } else {
+            // Добавить в избранное
+            const response = await fetch('/addToFavorite', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({course_id: props.course.id})
+            });
+            const data = await response.json();
+            console.log(data.message); // Вывод сообщения в консоль
+            favorites.value.push(props.course.id);
+        }
+    } catch (error) {
+        alert('Произошла ошибка при изменении статуса избранного.');
+    }
+};
+
+// Загружаем избранные курсы при монтировании компонента
+onMounted(() => {
+    if (isAuthenticated()) {
+        loadFavorites();
+    }
+});
 
 const enroll = () => {
-    router.post(route('enrollStudentCourse', props.course.id))
-}
+    router.post(route('enrollStudentCourse', props.course.id));
+};
 </script>
 
 <template>
@@ -36,12 +95,15 @@ const enroll = () => {
                             {{ course.description }}
                         </div>
                         <div class="mt-8">
-                            <span class="mr-4 bg-main-blue px-3 py-2 rounded-md text-white text-sm"><i
-                                class="fa fa-clock mr-2"></i>{{ course.duration }}</span>
-                            <span class="mr-4 bg-main-blue px-3 py-2 rounded-md text-white text-sm"><i
-                                class="fa fa-star text-yellow-400 mr-2"></i>{{ course.rating }}</span>
-                            <span class="bg-main-blue px-3 py-2 rounded-md text-white text-sm"><i
-                                class="fa fa-users mr-2"></i>{{course.users.length}} обучающихся</span>
+                            <span class="mr-4 bg-main-blue px-3 py-2 rounded-md text-white text-sm">
+                                <i class="fa fa-clock mr-2"></i>{{ course.duration }}
+                            </span>
+                            <span class="mr-4 bg-main-blue px-3 py-2 rounded-md text-white text-sm">
+                                <i class="fa fa-star text-yellow-400 mr-2"></i>{{ course.rating }}
+                            </span>
+                            <span class="bg-main-blue px-3 py-2 rounded-md text-white text-sm">
+                                <i class="fa fa-users mr-2"></i>{{ course.users.length }} обучающихся
+                            </span>
                         </div>
                     </div>
                     <div class="w-full xl:w-3/12">
@@ -63,7 +125,8 @@ const enroll = () => {
                         </div>
                         <div>
                             <a href="##" class="block text-indigo-700 font-bold">{{ course.user.name }}</a>
-                            <span class="text-sm text-indigo-500">Веб-разработка, HTML/CSS, Javascript, PHP, MySQL</span>
+                            <span
+                                class="text-sm text-indigo-500">Веб-разработка, HTML/CSS, Javascript, PHP, MySQL</span>
                         </div>
                     </div>
                     <div class="font-bold text-2xl text-main-blue mt-8">
@@ -79,46 +142,46 @@ const enroll = () => {
                     </div>
                     <div>
                         <!--COMMENTS-->
-                        <div class="font-bold text-2xl text-main-blue mt-8 border-b-2 border-main-blue pb-2">
-                            Отзывы о курсе
-                        </div>
-                        <div class="flex items-center mt-4">
-                            <div class="text-3xl">
-                                <span class="text-main-blue font-bold">4</span> <i
-                                class="fa fa-star text-yellow-400"></i>
-                            </div>
-                            <div class="text-xs text-gray-300 border-l ml-3 pl-3">
-                                <div>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div class="mt-2"><strong>из 314 отзывов</strong></div>
-                            </div>
-                        </div>
-                        <div class="text-2xl text-center mt-8">
-                            <span>Отзывов пока нет, станьте первым!</span>
-                        </div>
+<!--                        <div class="font-bold text-2xl text-main-blue mt-8 border-b-2 border-main-blue pb-2">-->
+<!--                            Отзывы о курсе-->
+<!--                        </div>-->
+<!--                        <div class="flex items-center mt-4">-->
+<!--                            <div class="text-3xl">-->
+<!--                                <span class="text-main-blue font-bold">4</span>-->
+<!--                                <i class="fa fa-star text-yellow-400"></i>-->
+<!--                            </div>-->
+<!--                            <div class="text-xs text-gray-300 border-l ml-3 pl-3">-->
+<!--                                <div>-->
+<!--                                    <i class="fa fa-star"></i>-->
+<!--                                    <i class="fa fa-star"></i>-->
+<!--                                    <i class="fa fa-star"></i>-->
+<!--                                    <i class="fa fa-star"></i>-->
+<!--                                    <i class="fa fa-star"></i>-->
+<!--                                </div>-->
+<!--                                <div>-->
+<!--                                    <i class="fa fa-star"></i>-->
+<!--                                    <i class="fa fa-star"></i>-->
+<!--                                    <i class="fa fa-star"></i>-->
+<!--                                    <i class="fa fa-star"></i>-->
+<!--                                </div>-->
+<!--                                <div>-->
+<!--                                    <i class="fa fa-star"></i>-->
+<!--                                    <i class="fa fa-star"></i>-->
+<!--                                    <i class="fa fa-star"></i>-->
+<!--                                </div>-->
+<!--                                <div>-->
+<!--                                    <i class="fa fa-star"></i>-->
+<!--                                    <i class="fa fa-star"></i>-->
+<!--                                </div>-->
+<!--                                <div>-->
+<!--                                    <i class="fa fa-star"></i>-->
+<!--                                </div>-->
+<!--                                <div class="mt-2"><strong>из 314 отзывов</strong></div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="text-2xl text-center mt-8">-->
+<!--                            <span>Отзывов пока нет, станьте первым!</span>-->
+<!--                        </div>-->
                         <!--/COMMENTS-->
                     </div>
                 </div>
@@ -133,9 +196,10 @@ const enroll = () => {
                                 class="w-full bg-green-700 text-center py-2 rounded-lg text-xl text-white">
                             <span>Купить</span>
                         </button>
-                        <button
-                            class="w-full border-2 border-red-700 hover:bg-red-800 text-center py-1 rounded-lg text-xl text-red-700 hover:text-red-100 mt-4">
-                            <span>Хочу пройти</span><i class="fa fa-heart ml-3"></i>
+                        <button @click="toggleFavorite"
+                                class="w-full border-2 border-red-700 hover:bg-red-800 text-center py-1 rounded-lg text-xl text-red-700 hover:text-red-100 mt-4">
+                            <span v-if="isFavorite(course.id)">Удалить из избранного</span>
+                            <span v-else>Хочу пройти</span><i class="fa fa-heart ml-3"></i>
                         </button>
                     </div>
                     <div v-else>Авторизуйтесь, чтобы начать</div>

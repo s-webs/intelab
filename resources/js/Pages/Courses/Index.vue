@@ -2,8 +2,8 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import Heading from "@/Components/Heading.vue";
 import {useI18n} from "vue-i18n";
-import {Link, router} from "@inertiajs/vue3";
-import {ref} from "vue";
+import {Link, router, usePage} from "@inertiajs/vue3";
+import {onMounted, ref} from "vue";
 
 const {t, locale} = useI18n();
 const props = defineProps({
@@ -13,6 +13,71 @@ const props = defineProps({
 });
 
 const selectedCategory = ref(null);
+
+const page = usePage()
+const user = page.props.auth.user
+const favorites = ref([]); // Храним избранные курсы
+
+const isAuthenticated = () => {
+    return user !== null
+}
+
+// Функция для загрузки избранных элементов
+const loadFavorites = async () => {
+    try {
+        const response = await fetch('/getFavorites');
+        const data = await response.json();
+        favorites.value = data.favorites.map(favorite => favorite.course_id); // Сохраняем только ID курсов
+    } catch (error) {
+        alert('Произошла ошибка при загрузке избранных элементов.');
+    }
+};
+
+// Проверка, находится ли курс в избранном
+const isFavorite = (courseId) => {
+    return favorites.value.includes(courseId);
+};
+
+// Функция для добавления или удаления из избранного
+const toggleFavorite = async (course) => {
+    try {
+        if (isFavorite(course.id)) {
+            // Удалить из избранного
+            const response = await fetch('/removeFromFavorite', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ course_id: course.id })
+            });
+            const data = await response.json();
+            console.log(data.message); // Выведем сообщение для проверки
+            favorites.value = favorites.value.filter(id => id !== course.id);
+        } else {
+            // Добавить в избранное
+            const response = await fetch('/addToFavorite', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ course_id: course.id })
+            });
+            const data = await response.json();
+            console.log(data.message); // Выведем сообщение для проверки
+            favorites.value.push(course.id);
+        }
+    } catch (error) {
+        alert('Произошла ошибка при изменении статуса избранного.');
+    }
+};
+
+
+// Загрузить избранные курсы при монтировании компонента
+onMounted(() => {
+    loadFavorites();
+});
 
 function truncate(text, length) {
     if (text.length > length) {
@@ -75,7 +140,7 @@ function filterCourses() {
                                     </Link>
                                 </div>
                                 <div>
-                                    <Link :href="route('home')" class="text-sm underline">{{ course.user.name }}</Link>
+                                    <span class="text-sm underline">{{ course.user.name }}</span>
                                 </div>
                                 <div class="text-gray-600 mt-4 mb-4 md:mb-6 lg:mb-8">
                                     {{ truncate(course.description, 200) }}
@@ -87,12 +152,13 @@ function filterCourses() {
                                     0 ₸
                                 </div>
                                 <div>
-                                    <button
-                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-full lg:w-auto mt-2 lg:mt-0">
-                                        {{ t('pages.addFavorite') }}
+                                    <button v-if="isAuthenticated()"
+                                            @click="toggleFavorite(course)"
+                                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-full lg:w-auto mt-2 lg:mt-0">
+                                        {{ isFavorite(course.id) ? t('pages.removeFavorite') : t('pages.addFavorite') }}
                                     </button>
                                     <a :href="route('showCourse', course.id)"
-                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded lg:ml-4 w-full lg:w-auto mt-2 lg:mt-0">
+                                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded lg:ml-4 w-full lg:w-auto mt-2 lg:mt-0">
                                         {{ t('pages.startLearning') }}
                                     </a>
                                 </div>

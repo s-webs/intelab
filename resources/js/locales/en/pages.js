@@ -101,4 +101,6 @@ export default {
 
     filterByCategory: 'Filter by category',
     allCategories: 'All categories',
+
+    removeFavorite: 'Delete from favorites',
 }

@@ -72,4 +72,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(CourseUser::class);
     }
+
+    public function favorites(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Favorite::class);
+    }
 }

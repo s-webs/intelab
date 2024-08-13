@@ -27,6 +27,10 @@ Route::middleware([
 ])->group(function () {
     Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
     Route::post('/profile/update', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/getFavorites', [\App\Http\Controllers\User\FavoritesController::class, 'getFavorites'])->name('getFavorites');
+    Route::post('/removeFromFavorite', [\App\Http\Controllers\User\FavoritesController::class, 'destroy'])->name('removeFromFavorite');
+    Route::post('/addToFavorite', [\App\Http\Controllers\User\FavoritesController::class, 'store'])->name('addToFavorite');
+
 
     Route::prefix('teacher')->group(function () {
         Route::resource('course', \App\Http\Controllers\Teacher\CourseController::class)->names('teacherCourse'); // Список курсов преподавателя
@@ -48,9 +52,6 @@ Route::middleware([
         Route::post('course/lesson-{lesson_id}/add-matching', [\App\Http\Controllers\Teacher\MatchingTestController::class, 'store'])->name('teacherCourse.lesson.addTest');
         Route::post('course/lesson-{lesson_id}/add-quiz', [\App\Http\Controllers\Teacher\QuizController::class, 'store'])->name('teacherCourse.lesson.addQuiz');
         Route::post('course/lesson-{lesson_id}/add-written', [\App\Http\Controllers\Teacher\WrittenController::class, 'store'])->name('teacherCourse.lesson.addWritten');
-        // Избранное
-        Route::post('/add-favorites', [\App\Http\Controllers\User\FavoritesController::class, 'store'])->name('addToFavorite');
-        Route::delete('/delete-favorites', [\App\Http\Controllers\User\FavoritesController::class, 'destroy'])->name('deleteFavorite');
     });
 
     Route::prefix('student')->group(function () {

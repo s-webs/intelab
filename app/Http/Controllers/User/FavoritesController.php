@@ -9,20 +9,20 @@ use Illuminate\Support\Facades\Auth;
 
 class FavoritesController extends Controller
 {
+    public function getFavorites()
+    {
+        $user = Auth::user();
+        // Получаем избранные элементы пользователя
+        $favorites = $user->favorites;
+
+        // Возвращаем данные в формате JSON
+        return response()->json([
+            'favorites' => $favorites,
+        ]);
+    }
+
     public function store(Request $request)
     {
-        $request->validate([
-            'course_id' => 'required|exists:courses,id',
-        ]);
-
-        $existingFavorite = Favorite::where('user_id', Auth::user()->id)
-            ->where('course_id', $request->course_id)
-            ->first();
-
-        if ($existingFavorite) {
-            return response()->json(['message' => 'Курс уже добавлен в избранное'], 409);
-        }
-
         $favorite = new Favorite();
         $favorite->user_id = Auth::user()->id;
         $favorite->course_id = $request->course_id;
@@ -34,19 +34,11 @@ class FavoritesController extends Controller
 
     public function destroy(Request $request)
     {
-        $request->validate([
-            'course_id' => 'required|exists:courses,id',
-        ]);
+        $user = Auth::user();
 
-        $favorite = Favorite::where('user_id', Auth::id())
-            ->where('course_id', $request->course_id)
-            ->first();
+        // Удаляем курс из избранного пользователя
+        $user->favorites()->where('course_id', $request->course_id)->delete();
 
-        if ($favorite) {
-            $favorite->delete();
-            return response()->json(['message' => 'Курс удален из избранного']);
-        }
-
-        return response()->json(['message' => 'Курс не найден в избранном'], 404);
+        return response()->json(['message' => 'Курс удален из избранного']);
     }
 }
