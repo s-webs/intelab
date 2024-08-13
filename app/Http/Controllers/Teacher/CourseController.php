@@ -96,6 +96,8 @@ class CourseController extends Controller
         $course->type = $request->type;
         $course->status = $request->status;
         $course->save();
+
+        return redirect(route('teacherCourse.index'));
     }
 
     /**

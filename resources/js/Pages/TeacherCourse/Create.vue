@@ -36,12 +36,11 @@ const form = useForm({
     status: 0,
     type: 'free',
     hidden: false,
-
 })
 
 const getContent = (val) => {
-    form.html = val
-    console.log(val)
+    form.html = val;
+    console.log(val);
 }
 
 const toggleType = (event) => {
@@ -49,7 +48,6 @@ const toggleType = (event) => {
     form.price = 0;
     form.old_price = 0;
 };
-
 
 const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -79,16 +77,14 @@ const previewImage = (file) => {
     const reader = new FileReader();
     reader.onload = (e) => {
         imageSrc.value = e.target.result;
-        form.image = e.target.result
-        console.log(e.target.result)// Предпросмотр изображения
+        form.image = e.target.result; // Устанавливаем изображение в форму
     };
     reader.readAsDataURL(file);
-}
+};
 
 const parentCategories = computed(() => {
     const categories = props.categories;
 
-    // Создаем объект для группировки подкатегорий по parent_id
     const groupedByParentId = categories.reduce((acc, category) => {
         if (category.parent_id !== null) {
             if (!acc[category.parent_id]) {
@@ -99,7 +95,6 @@ const parentCategories = computed(() => {
         return acc;
     }, {});
 
-    // Фильтруем родительские категории и добавляем подкатегории
     return categories
         .filter(category => category.parent_id === null)
         .map(parentCategory => ({
@@ -109,13 +104,17 @@ const parentCategories = computed(() => {
 });
 
 function store() {
-    form.post(route('teacherCourse.store'))
+    if (!form.image) {
+        alert('Пожалуйста, загрузите изображение перед сохранением.');
+        return;
+    }
+
+    form.post(route('teacherCourse.store'));
 }
 </script>
 
 <template>
     <AppLayout>
-        <!--        <div class="container mx-auto flex flex-col-reverse lg:flex-row">-->
         <div class="container mx-auto grid grid-cols-1 lg:grid-cols-3 my-8">
             <!-- Форма -->
             <form @submit.prevent="store" class="block shadow-md p-5 rounded-lg border col-span-1 lg:col-span-2">
@@ -245,42 +244,6 @@ function store() {
                                         t('pages.courseHiddenSwitch')
                                     }}</span>
                             </label>
-                        </div>
-                        <div class="mt-5">
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" class="sr-only peer" :checked="form.type === 'premium'"
-                                       @change="toggleType">
-                                <div
-                                    class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                                <span
-                                    class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-500">{{
-                                        t('pages.paidCourseSwitch')
-                                    }}</span>
-                            </label>
-                        </div>
-                        <div v-if="form.type === 'premium'"
-                             class="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                            <div class="sm:col-span-2 sm:col-start-1">
-                                <label for="price" class="block text-sm font-medium leading-6 text-gray-900">
-                                    {{ t('pages.courseCost') }}
-                                </label>
-                                <div class="mt-2">
-                                    <input v-model="form.price" type="number" name="price" id="price"
-                                           class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                           min="0">
-                                </div>
-                            </div>
-
-                            <div class="sm:col-span-2">
-                                <label for="old_price" class="block text-sm font-medium leading-6 text-gray-900">
-                                    {{ t('pages.oldCourseCost') }}
-                                </label>
-                                <div class="mt-2">
-                                    <input v-model="form.old_price" type="number" name="old_price" id="old_price"
-                                           class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                           min="0">
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
