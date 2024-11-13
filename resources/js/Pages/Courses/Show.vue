@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import {ref, onMounted} from "vue";
-import {usePage} from "@inertiajs/vue3";
+import {router, usePage} from "@inertiajs/vue3";
 
 const props = defineProps({
     course: Object,
@@ -142,46 +142,46 @@ const enroll = () => {
                     </div>
                     <div>
                         <!--COMMENTS-->
-<!--                        <div class="font-bold text-2xl text-main-blue mt-8 border-b-2 border-main-blue pb-2">-->
-<!--                            Отзывы о курсе-->
-<!--                        </div>-->
-<!--                        <div class="flex items-center mt-4">-->
-<!--                            <div class="text-3xl">-->
-<!--                                <span class="text-main-blue font-bold">4</span>-->
-<!--                                <i class="fa fa-star text-yellow-400"></i>-->
-<!--                            </div>-->
-<!--                            <div class="text-xs text-gray-300 border-l ml-3 pl-3">-->
-<!--                                <div>-->
-<!--                                    <i class="fa fa-star"></i>-->
-<!--                                    <i class="fa fa-star"></i>-->
-<!--                                    <i class="fa fa-star"></i>-->
-<!--                                    <i class="fa fa-star"></i>-->
-<!--                                    <i class="fa fa-star"></i>-->
-<!--                                </div>-->
-<!--                                <div>-->
-<!--                                    <i class="fa fa-star"></i>-->
-<!--                                    <i class="fa fa-star"></i>-->
-<!--                                    <i class="fa fa-star"></i>-->
-<!--                                    <i class="fa fa-star"></i>-->
-<!--                                </div>-->
-<!--                                <div>-->
-<!--                                    <i class="fa fa-star"></i>-->
-<!--                                    <i class="fa fa-star"></i>-->
-<!--                                    <i class="fa fa-star"></i>-->
-<!--                                </div>-->
-<!--                                <div>-->
-<!--                                    <i class="fa fa-star"></i>-->
-<!--                                    <i class="fa fa-star"></i>-->
-<!--                                </div>-->
-<!--                                <div>-->
-<!--                                    <i class="fa fa-star"></i>-->
-<!--                                </div>-->
-<!--                                <div class="mt-2"><strong>из 314 отзывов</strong></div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="text-2xl text-center mt-8">-->
-<!--                            <span>Отзывов пока нет, станьте первым!</span>-->
-<!--                        </div>-->
+                        <!--                        <div class="font-bold text-2xl text-main-blue mt-8 border-b-2 border-main-blue pb-2">-->
+                        <!--                            Отзывы о курсе-->
+                        <!--                        </div>-->
+                        <!--                        <div class="flex items-center mt-4">-->
+                        <!--                            <div class="text-3xl">-->
+                        <!--                                <span class="text-main-blue font-bold">4</span>-->
+                        <!--                                <i class="fa fa-star text-yellow-400"></i>-->
+                        <!--                            </div>-->
+                        <!--                            <div class="text-xs text-gray-300 border-l ml-3 pl-3">-->
+                        <!--                                <div>-->
+                        <!--                                    <i class="fa fa-star"></i>-->
+                        <!--                                    <i class="fa fa-star"></i>-->
+                        <!--                                    <i class="fa fa-star"></i>-->
+                        <!--                                    <i class="fa fa-star"></i>-->
+                        <!--                                    <i class="fa fa-star"></i>-->
+                        <!--                                </div>-->
+                        <!--                                <div>-->
+                        <!--                                    <i class="fa fa-star"></i>-->
+                        <!--                                    <i class="fa fa-star"></i>-->
+                        <!--                                    <i class="fa fa-star"></i>-->
+                        <!--                                    <i class="fa fa-star"></i>-->
+                        <!--                                </div>-->
+                        <!--                                <div>-->
+                        <!--                                    <i class="fa fa-star"></i>-->
+                        <!--                                    <i class="fa fa-star"></i>-->
+                        <!--                                    <i class="fa fa-star"></i>-->
+                        <!--                                </div>-->
+                        <!--                                <div>-->
+                        <!--                                    <i class="fa fa-star"></i>-->
+                        <!--                                    <i class="fa fa-star"></i>-->
+                        <!--                                </div>-->
+                        <!--                                <div>-->
+                        <!--                                    <i class="fa fa-star"></i>-->
+                        <!--                                </div>-->
+                        <!--                                <div class="mt-2"><strong>из 314 отзывов</strong></div>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <!--                        <div class="text-2xl text-center mt-8">-->
+                        <!--                            <span>Отзывов пока нет, станьте первым!</span>-->
+                        <!--                        </div>-->
                         <!--/COMMENTS-->
                     </div>
                 </div>
