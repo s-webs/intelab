@@ -20,11 +20,10 @@ const isAuthenticated = () => {
 // Функция для загрузки избранных курсов
 const loadFavorites = async () => {
     try {
-        const response = await fetch('/getFavorites');
-        const data = await response.json();
-        favorites.value = data.favorites.map(favorite => favorite.course_id); // Сохраняем только ID курсов
+        const response = await axios.get('/getFavorites');
+        favorites.value = response.data.favorites.map(favorite => favorite.course_id); // Сохраняем только ID курсов
     } catch (error) {
-        console.log('Произошла ошибка при загрузке избранных курсов.');
+        console.log('Произошла ошибка при загрузке избранных курсов:', error.message);
     }
 };
 
