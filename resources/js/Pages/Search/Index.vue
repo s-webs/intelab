@@ -4,6 +4,7 @@ import Heading from "@/Components/Heading.vue";
 import { useI18n } from "vue-i18n";
 import { Link, router, usePage } from "@inertiajs/vue3";
 import { onMounted, ref } from "vue";
+import Search from "@/Pages/Home/components/Search.vue";
 
 const { t, locale } = useI18n();
 const props = defineProps({
@@ -84,7 +85,8 @@ function truncate(text, length) {
 
 <template>
     <AppLayout>
-        <div class="container mx-auto my-8 px-2">
+        <Search class="mt-8"></Search>
+        <div class="container mx-auto my-8 px-2 mt-8">
             <Heading :title="`Результаты поиска: ${query}`"></Heading>
 
             <div v-if="results.data.length > 0" class="flex flex-wrap -mx-4 py-4">
