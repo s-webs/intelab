@@ -18,6 +18,7 @@ use Inertia\Inertia;
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/category-{category_id}/courses', [\App\Http\Controllers\User\CoursesController::class, 'index'])->name('categoryCourses');
 Route::get('/courses/course-{course_id}/show', [\App\Http\Controllers\User\CoursesController::class, 'show'])->name('showCourse');
+Route::get('/search', [\App\Http\Controllers\SearchController::class, 'results'])->name('search.results');
 
 // Авторизация Laravel JetStream
 Route::middleware([
@@ -34,6 +35,7 @@ Route::middleware([
 
     Route::prefix('teacher')->group(function () {
         Route::resource('course', \App\Http\Controllers\Teacher\CourseController::class)->names('teacherCourse'); // Список курсов преподавателя
+        Route::get('course/{id}/statistic', [\App\Http\Controllers\Teacher\CourseController::class, 'statistic'])->name('teacherCourse.statistic'); // Статистика курса для преподавателя
         Route::get('course/{course_id}/program', [\App\Http\Controllers\Teacher\CourseProgramController::class, 'index'])->name('teacherCourse.program'); // Программа курса
         // Модули
         Route::post('course/{course_id}/program', [\App\Http\Controllers\Teacher\CourseProgramController::class, 'storeModule'])->name('teacherCourse.module.store');

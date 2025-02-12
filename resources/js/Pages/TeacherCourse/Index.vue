@@ -98,26 +98,28 @@ const courses = props.courses
                                         }}</span>
                                 </td>
                                 <td class="px-6 py-4 text-end">
-                                    <a href="#"
-                                       class="font-medium text-main-blue text-sm p-1 rounded-md border border-main-blue mr-2">
-                                        <span class="hidden xl:inline xl:mr-2">{{ t('pages.statistics') }}</span>
-                                        <i class="fa-solid fa-chart-line"></i>
-                                    </a>
-                                    <Link :href="route('teacherCourse.program', course.id)"
-                                          class="font-medium text-main-blue text-sm p-1 rounded-md border border-main-blue mr-2">
-                                        <span class="hidden xl:inline xl:mr-2">{{ t('pages.courseProgram') }}</span>
-                                        <i class="fa fa-layer-group"></i>
-                                    </Link>
-                                    <Link :href="route('teacherCourse.edit', course.id)"
-                                          class="font-medium text-main-blue text-sm p-1 rounded-md border border-main-blue mr-2">
-                                        <span class="hidden 2xl:inline 2xl:mr-2">{{ t('pages.edit') }}</span>
-                                        <i class="fa fa-pen"></i>
-                                    </Link>
-                                    <button @click="destroy(course.id)"
-                                            class="font-medium text-sm text-red-600 p-1 rounded-md border border-red-600">
-                                        <span class="hidden 2xl:inline 2xl:mr-2">{{ t('pages.delete') }}</span>
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                    <div class="flex items-center">
+                                        <Link :href="route('teacherCourse.statistic', course.id)"
+                                              class="font-medium text-main-blue text-sm p-1 rounded-md border border-main-blue mr-2">
+                                            <span class="hidden xl:inline xl:mr-2">{{ t('pages.statistics') }}</span>
+                                            <i class="fa-solid fa-chart-line"></i>
+                                        </Link>
+                                        <Link :href="route('teacherCourse.program', course.id)"
+                                              class="font-medium text-main-blue text-sm p-1 rounded-md border border-main-blue mr-2">
+                                            <span class="hidden xl:inline xl:mr-2">{{ t('pages.courseProgram') }}</span>
+                                            <i class="fa fa-layer-group"></i>
+                                        </Link>
+                                        <Link :href="route('teacherCourse.edit', course.id)"
+                                              class="font-medium text-main-blue text-sm p-1 rounded-md border border-main-blue mr-2">
+                                            <span class="hidden 2xl:inline 2xl:mr-2">{{ t('pages.edit') }}</span>
+                                            <i class="fa fa-pen"></i>
+                                        </Link>
+                                        <button @click="destroy(course.id)"
+                                                class="font-medium text-sm text-red-600 p-1 rounded-md border border-red-600">
+                                            <span class="hidden 2xl:inline 2xl:mr-2">{{ t('pages.delete') }}</span>
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                             </tbody>

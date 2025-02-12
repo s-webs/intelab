@@ -130,4 +130,67 @@ class CourseController extends Controller
             'courseUser' => $courseUser
         ]);
     }
+
+    public function statistic(string $course_id)
+    {
+        $course = Course::with(['users'])->findOrFail($course_id);
+
+        // Общее количество студентов
+        $totalStudents = $course->users->count();
+
+        // Количество студентов, завершивших курс (completed_at не null)
+        $completedStudents = $course->users->filter(function ($user) {
+            return $user->pivot->completed_at !== null;
+        })->count();
+
+        // Средний прогресс студентов
+        $averageProgress = $course->users->avg('pivot.progress');
+
+        // Группировка прогресса по диапазонам
+        $progressRanges = [
+            '0-25%' => 0,
+            '25-50%' => 0,
+            '50-75%' => 0,
+            '75-100%' => 0,
+        ];
+
+        foreach ($course->users as $user) {
+            $progress = $user->pivot->progress;
+
+            if ($progress <= 25) {
+                $progressRanges['0-25%']++;
+            } elseif ($progress <= 50) {
+                $progressRanges['25-50%']++;
+            } elseif ($progress <= 75) {
+                $progressRanges['50-75%']++;
+            } else {
+                $progressRanges['75-100%']++;
+            }
+        }
+
+        // Данные для графика
+        $progressData = [
+            'labels' => array_keys($progressRanges), // Диапазоны прогресса
+            'datasets' => [
+                [
+                    'label' => 'Количество студентов',
+                    'data' => array_values($progressRanges), // Количество студентов в каждом диапазоне
+                    'borderColor' => 'rgba(75, 192, 192, 1)', // Цвет линии
+                    'backgroundColor' => 'rgba(75, 192, 192, 0.2)', // Цвет заливки под линией
+                    'fill' => true, // Заливка под линией
+                    'tension' => 0.4, // Кривизна линии
+                ],
+            ],
+        ];
+        $students = $course->users()->paginate(20);
+
+        return Inertia::render('TeacherCourse/Statistic', [
+            'course' => $course,
+            'totalStudents' => $totalStudents,
+            'completedStudents' => $completedStudents,
+            'averageProgress' => $averageProgress,
+            'progressData' => $progressData,
+            'students' => $students
+        ]);
+    }
 }

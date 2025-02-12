@@ -6,6 +6,7 @@ import Categories from "@/Pages/Home/components/Categories.vue";
 import Heading from "@/Components/Heading.vue";
 import {ref, watch} from "vue";
 import {useI18n} from "vue-i18n";
+import {router} from "@inertiajs/vue3";
 
 const props = defineProps({
     stock: Object,
