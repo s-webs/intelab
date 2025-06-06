@@ -11,6 +11,11 @@ class HomeController extends Controller
 {
     public function index()
     {
+        return Inertia::render('Home/Index');
+    }
+
+    public function catalog()
+    {
         $categories = Category::all()->map(function ($category) {
             $category->loadCount(['courses' => function ($query) {
                 $query->where('status', true)->where('hidden', false);

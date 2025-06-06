@@ -18,8 +18,13 @@ export default {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
             colors: {
-                'main-blue': '#193d6b',
-                'main-blue2': '#2C61A5'
+                'main-blue': '#466B6A',
+                'main-blue2': '#2C61A5',
+                'main': {
+                    primary: '#466B6A',
+                    halftone: '#FBFBED',
+                    halftoneDark: '#CBCBC1',
+                },
             }
         },
     },

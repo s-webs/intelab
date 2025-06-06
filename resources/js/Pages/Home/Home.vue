@@ -26,7 +26,7 @@ watch(locale, (newLang) => {
     <AppLayout>
         <div class="container mx-auto px-4">
             <Search class="mt-8"></Search>
-            <stocks class="mt-8" :stock="stock"></stocks>
+<!--            <stocks class="mt-8" :stock="stock"></stocks>-->
             <div class="mt-8">
                 <Heading :title="t('pages.categories')"/>
                 <Categories :key="currentLanguage" :categories="categories"></Categories>
