@@ -64,8 +64,8 @@ function store() {
 
 <template>
     <AppLayout>
-        <div class="container mx-auto px-2">
-            <form @submit.prevent="store" method="post">
+        <div class="container mx-auto bg-white p-4 my-[50px] rounded-[15px]">
+            <form @submit.prevent="store" method="post" class="">
                 <div class="space-y-12">
                     <div class="border-b border-gray-900/10 pb-12">
                         <Heading title="Профиль" class="mt-8"/>
@@ -175,7 +175,7 @@ function store() {
                 <div class="mt-6 flex items-center justify-end gap-x-6">
                     <a href="/" type="button" class="text-sm font-semibold leading-6 text-gray-900">Отмена</a>
                     <button type="submit"
-                            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                            class="rounded-md bg-main-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#2E5C5B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                         Сохранить
                     </button>
                 </div>
