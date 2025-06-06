@@ -20,7 +20,7 @@ const translatedBreadcrumbs = computed(() =>
 </script>
 
 <template>
-    <nav class="flex py-3 px-5 text-gray-700 bg-gray-100 rounded-md shadow-sm" aria-label="Breadcrumb">
+    <nav class="flex py-3 px-5 text-gray-700 bg-white rounded-md shadow-sm" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
             <li v-for="(breadcrumb, index) in translatedBreadcrumbs" :key="index" class="inline-flex items-center">
                 <div v-if="index !== translatedBreadcrumbs.length - 1">

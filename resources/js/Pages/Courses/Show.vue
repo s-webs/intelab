@@ -187,12 +187,12 @@ const enroll = () => {
                 <div class="w-full xl:w-1/5 mb-4 xl:mb-0">
                     <div v-if="isAuthenticated()">
                         <button @click="enroll" v-if="course.type === 'free'"
-                                class="w-full bg-green-700 hover:bg-green-800 text-center py-2 rounded-lg text-xl text-white">
+                                class="w-full bg-main-primary hover:bg-[#2E4E4E] text-center py-2 rounded-lg text-xl text-white">
                             <span v-if="isUserEnrolled">Продолжить обучение</span>
                             <span v-else>Начать обучение</span>
                         </button>
                         <button v-if="course.type === 'premium'"
-                                class="w-full bg-green-700 text-center py-2 rounded-lg text-xl text-white">
+                                class="w-full bg-main-primary text-center py-2 rounded-lg text-xl text-white">
                             <span>Купить</span>
                         </button>
                         <button @click="toggleFavorite"

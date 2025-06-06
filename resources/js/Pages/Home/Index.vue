@@ -57,7 +57,7 @@ import FeedBackBlock from "@/Pages/Home/components/FeedBackBlock.vue";
                 <div class="container mx-auto px-4">
                     <div class="relative z-[5] text-4xl font-bold text-white">Начните бесплатно уже сегодня!</div>
                     <div class="relative z-[5] my-[30px]">
-                        <a href="##" class="block p-[16px] bg-[#8DBDBD] max-w-[600px] text-[#476B6B] text-2xl font-bold text-center rounded-[15px]">Зарегистрируйтесь бесплатно</a>
+                        <a href="##" class="block p-[16px] bg-[#8DBDBD] hover:bg-main-primary hover:text-[#8DBDBD] max-w-[600px] text-[#476B6B] text-2xl font-bold text-center rounded-[15px] transition-all duration-300">Зарегистрируйтесь бесплатно</a>
                     </div>
                     <div class="relative z-[5]">
                         <span class="text-xl text-white">Получите доступ ко всем функциям Intelab на 14 дней</span>
