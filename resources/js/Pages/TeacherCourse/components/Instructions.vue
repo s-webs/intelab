@@ -5,7 +5,7 @@ const {t, locale} = useI18n()
 </script>
 
 <template>
-    <ul class="rounded-lg p-5 shadow-md border">
+    <ul class="rounded-lg p-5 shadow-md border bg-white">
         <li class="mb-3">
             <a href="##" class="text-[#2E4E4E] font-medium">{{ t('pages.createCourseManual') }} (Нужно сделать)</a>
         </li>

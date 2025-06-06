@@ -117,7 +117,8 @@ function store() {
     <AppLayout>
         <div class="container mx-auto grid grid-cols-1 lg:grid-cols-3 my-8">
             <!-- Форма -->
-            <form @submit.prevent="store" class="block shadow-md p-5 rounded-lg border col-span-1 lg:col-span-2">
+            <form @submit.prevent="store"
+                  class="block shadow-md p-5 rounded-lg border col-span-1 lg:col-span-2 bg-white">
                 <div class="space-y-12">
                     <h1 class="border-b-2 border-main-blue pb-2 text-2xl font-medium text-main-blue">
                         {{ t('pages.createNewCourse') }}
@@ -255,7 +256,7 @@ function store() {
                         }}
                     </Link>
                     <button type="submit"
-                            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                            class="rounded-md bg-main-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#2E5C5B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                         {{ t('pages.save') }}
                     </button>
                 </div>
