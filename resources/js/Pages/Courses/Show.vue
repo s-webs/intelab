@@ -81,7 +81,7 @@ const enroll = () => {
 
 <template>
     <AppLayout>
-        <div class="bg-main-blue2 m-0 p-0">
+        <div class="bg-[#1F5B4D] m-0 p-0">
             <div class="container mx-auto px-2">
                 <div class="flex py-8 items-center justify-between flex-col-reverse xl:flex-row">
                     <div class="w-full xl:w-3/5">
@@ -111,21 +111,21 @@ const enroll = () => {
                 </div>
             </div>
         </div>
-        <div class="container mx-auto mt-8 px-2">
+        <div class="container mx-auto mt-8 px-2 mb-[50px]">
             <div class="flex justify-between flex-col-reverse xl:flex-row">
                 <div class="w-full xl:w-3/4 border-r pr-4">
                     <div v-html="course.content"></div>
                     <div class="font-bold text-2xl text-main-blue mt-8">
                         Преподаватель
                     </div>
-                    <div class="flex items-center border w-full xl:w-3/6 p-3 rounded-lg bg-indigo-300 mt-2">
-                        <div class="w-20 mr-2">
-                            <img :src="course.user.photo" alt="" class="rounded-lg">
+                    <div class="flex items-center border w-full xl:w-3/6 p-3 rounded-lg bg-[#1F5B4D] mt-2">
+                        <div class="w-[80px] h-[80px] mr-2">
+                            <img :src="course.user.photo" alt="" class="w-full h-full object-cover rounded-full" />
                         </div>
                         <div>
-                            <a href="##" class="block text-indigo-700 font-bold">{{ course.user.name }}</a>
+                            <a href="##" class="block text-white font-bold">{{ course.user.name }}</a>
                             <span
-                                class="text-sm text-indigo-500">Веб-разработка, HTML/CSS, Javascript, PHP, MySQL</span>
+                                class="text-sm text-white">Веб-разработка, HTML/CSS, Javascript, PHP, MySQL</span>
                         </div>
                     </div>
                     <div class="font-bold text-2xl text-main-blue mt-8">
@@ -202,11 +202,11 @@ const enroll = () => {
                         </button>
                     </div>
                     <div v-else>Авторизуйтесь, чтобы начать</div>
-                    <div class="mt-8 bg-indigo-300 p-4 rounded-lg">
-                        <div class="text-indigo-700 font-bold">В курс входят</div>
-                        <div class="mt-4 text-sm font-medium text-indigo-900">{{ course.modules.length }} модулей</div>
-                        <div class="text-sm font-medium text-indigo-900">{{ lessonsTotalCount }} уроков</div>
-                        <div class="mt-8 text-sm italic text-indigo-800">Последнее обновление курса 19.12.2024</div>
+                    <div class="mt-8 bg-[#1F5B4D] p-4 rounded-lg">
+                        <div class="text-white font-bold">В курс входят</div>
+                        <div class="mt-4 text-sm font-medium text-white">{{ course.modules.length }} модулей</div>
+                        <div class="text-sm font-medium text-white">{{ lessonsTotalCount }} уроков</div>
+                        <div class="mt-8 text-sm italic text-white">Последнее обновление курса 19.12.2024</div>
                     </div>
                 </div>
             </div>
