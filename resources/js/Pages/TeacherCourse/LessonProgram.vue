@@ -163,7 +163,7 @@ const deleteWritten = (step) => {
 
 <template>
     <AppLayout>
-        <div class="container mx-auto my-8">
+        <div class="container px-4 mx-auto my-8">
             <Breadcrumbs :breadcrumbs="breadcrumbs"/>
             <div class="flex justify-between items-center border-b-2 border-main-blue pb-2 mt-8">
                 <h1 class="text-2xl font-medium text-main-blue">
