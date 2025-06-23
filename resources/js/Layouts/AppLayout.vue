@@ -149,17 +149,19 @@ if (localStorage.getItem('language')) {
                             </Link>
                         </div>
                     </li>
-                    <div v-if="user.email === 'swebs.sh@gmail.com' || user.email === 'shokhnoza.kh@gmail.com'">
-                        <li class="text-sm text-main-primary border-b border-main-primary mt-5">
-                            <span>ADMIN</span>
-                        </li>
-                        <li>
-                            <Link :href="route('admin.dashboard')"
-                                  class="flex border border-main-primary hover:bg-main-primary hover:text-white items-center bg-main-halftone py-1 px-2 text-sm text-main-primary rounded-lg mt-4">
-                                <i class="fa-solid fa-dashboard mr-2"></i>
-                                <span class="pt-0.5">Админ панель</span>
-                            </Link>
-                        </li>
+                    <div v-if="user">
+                        <div v-if="user.email === 'swebs.sh@gmail.com' || user.email === 'shokhnoza.kh@gmail.com'">
+                            <li class="text-sm text-main-primary border-b border-main-primary mt-5">
+                                <span>ADMIN</span>
+                            </li>
+                            <li>
+                                <Link :href="route('admin.dashboard')"
+                                      class="flex border border-main-primary hover:bg-main-primary hover:text-white items-center bg-main-halftone py-1 px-2 text-sm text-main-primary rounded-lg mt-4">
+                                    <i class="fa-solid fa-dashboard mr-2"></i>
+                                    <span class="pt-0.5">Админ панель</span>
+                                </Link>
+                            </li>
+                        </div>
                     </div>
                     <!-- Основные -->
                     <li class="text-sm text-main-primary border-b border-main-primary mt-5">

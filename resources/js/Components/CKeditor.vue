@@ -12,6 +12,8 @@ const emit = defineEmits(['sendContent']);
 
 onMounted(() => {
     ckEditor = window.CKEDITOR.replace('editor', {
+        versionCheck: false,
+
         toolbarGroups: [
             {name: 'document', groups: ['mode', 'find']},
             {name: 'styles', groups: ['styles']},
