@@ -34,6 +34,11 @@ Route::middleware([
     Route::post('/addToFavorite', [\App\Http\Controllers\User\FavoritesController::class, 'store'])->name('addToFavorite');
     Route::get('/favorites', [\App\Http\Controllers\User\FavoritesController::class, 'index'])->name('favorites');
 
+    Route::prefix('admin')->group(function () {
+        Route::get('dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
+        Route::get('dashboard/{course_id}', [\App\Http\Controllers\Admin\DashboardController::class, 'courseShow'])->name('admin.courseShow');
+    });
+
     Route::prefix('teacher')->group(function () {
         Route::resource('course', \App\Http\Controllers\Teacher\CourseController::class)->names('teacherCourse'); // Список курсов преподавателя
         Route::get('course/{id}/statistic', [\App\Http\Controllers\Teacher\CourseController::class, 'statistic'])->name('teacherCourse.statistic'); // Статистика курса для преподавателя

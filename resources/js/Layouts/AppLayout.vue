@@ -62,7 +62,8 @@ if (localStorage.getItem('language')) {
                     <button @click="showSidebar = !showSidebar"><i class="fa fa-bars"></i></button>
                 </div>
                 <Link href="/" class="block">
-                    <img class="w-[80px] md:w-[107px] absolute top-[12px] left-1/2 transform -translate-x-1/2" src="/images/default/intelab-logo.png" alt="logo"/>
+                    <img class="w-[80px] md:w-[107px] absolute top-[12px] left-1/2 transform -translate-x-1/2"
+                         src="/images/default/intelab-logo.png" alt="logo"/>
 
                 </Link>
                 <div class="flex items-center flex-1 justify-end">
@@ -124,7 +125,8 @@ if (localStorage.getItem('language')) {
             <div class="py-4 overflow-y-auto mt-4 border-t border-main-primary">
                 <ul class="font-medium">
                     <li class="lg:hidden">
-                        <div v-if="user" class="flex justify-between items-center border rounded-full border-main-primary p-[6px]">
+                        <div v-if="user"
+                             class="flex justify-between items-center border rounded-full border-main-primary p-[6px]">
                             <button @click="toggleMenu" class="flex items-center">
                                 <img class="w-8 h-8 rounded-full border object-cover" :src="user.photo" alt="avatar"/>
                                 <span class="ml-2 text-main-primary">{{ user.name }}</span>
@@ -137,14 +139,28 @@ if (localStorage.getItem('language')) {
                             </div>
                         </div>
                         <div v-else>
-                            <Link :href="route('login')" class="block rounded-full border border-main-primary text-main-primary text-center py-1 px-2 mb-[10px] ">
+                            <Link :href="route('login')"
+                                  class="block rounded-full border border-main-primary text-main-primary text-center py-1 px-2 mb-[10px] ">
                                 {{ t('auth.login') }}
                             </Link>
-                            <Link :href="route('register')" class="block rounded-full border border-main-primary text-main-primary text-center py-1 px-2">
+                            <Link :href="route('register')"
+                                  class="block rounded-full border border-main-primary text-main-primary text-center py-1 px-2">
                                 {{ t('auth.register') }}
                             </Link>
                         </div>
                     </li>
+                    <div v-if="user.email === 'swebs.sh@gmail.com' || user.email === 'shokhnoza.kh@gmail.com'">
+                        <li class="text-sm text-main-primary border-b border-main-primary mt-5">
+                            <span>ADMIN</span>
+                        </li>
+                        <li>
+                            <Link :href="route('admin.dashboard')"
+                                  class="flex border border-main-primary hover:bg-main-primary hover:text-white items-center bg-main-halftone py-1 px-2 text-sm text-main-primary rounded-lg mt-4">
+                                <i class="fa-solid fa-dashboard mr-2"></i>
+                                <span class="pt-0.5">Админ панель</span>
+                            </Link>
+                        </li>
+                    </div>
                     <!-- Основные -->
                     <li class="text-sm text-main-primary border-b border-main-primary mt-5">
                         <span>{{ t('menu.main') }}</span>
