@@ -36,6 +36,9 @@ Route::middleware([
 
     Route::prefix('admin')->group(function () {
         Route::get('dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
+        Route::get('courses', [\App\Http\Controllers\Admin\DashboardController::class, 'courses'])->name('admin.courses');
+        Route::get('users', [\App\Http\Controllers\Admin\DashboardController::class, 'users'])->name('admin.users');
+        Route::delete('/admin/users/{user}', [\App\Http\Controllers\Admin\DashboardController::class, 'deleteUser'])->name('admin.users.destroy');
         Route::get('dashboard/{course_id}', [\App\Http\Controllers\Admin\DashboardController::class, 'courseShow'])->name('admin.courseShow');
     });
 
