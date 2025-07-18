@@ -73,4 +73,10 @@ class DashboardController extends Controller
         $user->delete();
     }
 
+    public function courseDelete($id)
+    {
+        $course = Course::findOrFail($id);
+        $course->delete();
+    }
+
 }

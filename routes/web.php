@@ -40,6 +40,7 @@ Route::middleware([
         Route::get('users', [\App\Http\Controllers\Admin\DashboardController::class, 'users'])->name('admin.users');
         Route::delete('/admin/users/{user}', [\App\Http\Controllers\Admin\DashboardController::class, 'deleteUser'])->name('admin.users.destroy');
         Route::get('dashboard/{course_id}', [\App\Http\Controllers\Admin\DashboardController::class, 'courseShow'])->name('admin.courseShow');
+        Route::delete('/admin/courses/{id}', [\App\Http\Controllers\Admin\DashboardController::class, 'courseDelete'])->name('admin.course.destroy');
     });
 
     Route::prefix('teacher')->group(function () {
